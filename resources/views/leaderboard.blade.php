@@ -21,9 +21,19 @@
     <main class="main-content" id="app">
         <section class="section">
             <div class="container">
-                <h1 id="main-title" class=" text-center">Chart</h1>
+                <h1 id="main-title" class="">
+                    <p class="item">
+                        <select name="categorie" id="">
+                            <option value="1">Cat1</option>
+                            <option value="2">Cat2</option>
+                            <option value="3">Cat3</option>
+                            <option value="4">Cat4</option>
+                            <option value="5">Cat5</option>
+                        </select>
+                    </p>
+                </h1>
 
-                <hr>
+
                 <div id="chart-card" class="card">
                     <div class="card-body position-relative">
                         <div class="text-right mb-4" v-if="false">
@@ -71,7 +81,7 @@
                 duration: 20,
                 tickDuration: 1,
                 top_n: 10,
-                title: "Realtime bar chart",
+                title: "Candidats",
                 fileplaceholder: "Choose file",
                 realtime_data: [],
                 // realtime_data: testDatasets,

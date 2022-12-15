@@ -102,18 +102,16 @@ text.label {
     text-anchor: start;
 }
 
-
-
 .section {
-    background: #f3f4f4;
+    background: #fafafa;
     position: relative;
     border-bottom: none;
     background-position: center center;
     -webkit-background-size: cover;
     background-size: cover;
     background-repeat: no-repeat;
-    padding-top: 7rem;
-    padding-bottom: 7rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
 }
 
 .form-control {
