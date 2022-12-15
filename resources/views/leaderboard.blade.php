@@ -18,40 +18,61 @@
 </head>
 
 <body>
-    <main class="main-content" id="app">
-        <section class="section">
-            <div class="container">
-                <h1 id="main-title" class="">
-                    <p class="item">
-                        <select name="categorie" id="">
-                            <option value="1">Cat1</option>
-                            <option value="2">Cat2</option>
-                            <option value="3">Cat3</option>
-                            <option value="4">Cat4</option>
-                            <option value="5">Cat5</option>
-                        </select>
-                    </p>
-                </h1>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-9">
+                <main class="main-content" id="app">
+                    <section class="section">
+                        <div class="container">
+                            <h1 id="main-title" class="">
+                                <p class="item">
+                                    <select name="categorie" id="">
+                                        <option value="">Selectionner la catégorie</option>
+                                        <option value="1">DSI INNOVANT(E)</option>
+                                        <option value="2">DSI RESILIENT</option>
+                                        <option value="3">LEADERSHIP FEMININ </option>
+                                        <option value="4">ADMINISTRATION INTELLIGENTE</option>
+                                        <option value="5">COUP DE CŒUR</option>
+                                        <option value="6">ENTREPRISE DIGITALE</option>
+                                        <option value="7">INDUSTRIE 4.0</option>
+                                        <option value="8">LEADER DU SERVICE IT</option>
+                                        <option value="9">CHAMPION DE L’EDUCATION</option>
+                                        <option value="10">DEFENSEURS</option>
+                                    </select>
+                                </p>
+                            </h1>
 
 
-                <div id="chart-card" class="card">
-                    <div class="card-body position-relative">
-                        <div class="text-right mb-4" v-if="false">
-                            <button type="button" class="btn btn-xs btn-outline-primary"
-                                v-on:click="startRace">Infinite</button>
+                            <div id="chart-card" class="card">
+                                <div class="card-body position-relative">
+                                    <div class="text-right mb-4" v-if="false">
+                                        <button type="button" class="btn btn-xs btn-outline-primary"
+                                            v-on:click="startRace">Infinite</button>
+                                    </div>
+                                    <h5 class="card-title" id="graph-title">((title))</h5>
+                                    <div id="chartDiv" style="width:100%; height: 650px"></div>
+                                    <!-- <p style="position:absolute;top:50%;left:50%;font-size:1.125rem;transform: translate(-50%,-50%)"
+                                        v-if="interval == null">Please upload data first</p> -->
+                                    <p style="position:absolute;top:50%;left:50%;font-size:1.125rem;transform: translate(-50%,-50%)"
+                                        v-if="isLoadingDataSets">Chargement en cours ...</p>
+                                </div>
+                            </div>
                         </div>
-                        <h5 class="card-title" id="graph-title">((title))</h5>
-                        <div id="chartDiv" style="width:100%; height: 650px"></div>
-                        <!-- <p style="position:absolute;top:50%;left:50%;font-size:1.125rem;transform: translate(-50%,-50%)"
-                            v-if="interval == null">Please upload data first</p> -->
-                        <p style="position:absolute;top:50%;left:50%;font-size:1.125rem;transform: translate(-50%,-50%)"
-                            v-if="isLoadingDataSets">Chargement en cours ...</p>
-                    </div>
-                </div>
-            </div>
-        </section>
+                    </section>
 
-    </main>
+                </main>
+            </div>
+            <div class="col-md-3">
+                <h2 class="">
+                    Nos Partenaires
+                </h2>
+                <hr>
+                <img src="" alt="">
+            </div>
+        </div>
+    </div>
+
+
     <script src="https://cdn.jsdelivr.net/npm/vue@2.7.14"></script>
     <script src="https://d3js.org/d3.v5.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.15/lodash.min.js"></script>

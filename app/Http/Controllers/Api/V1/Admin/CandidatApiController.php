@@ -15,9 +15,7 @@ class CandidatApiController extends Controller
 {
     public function race(Request $request)
     {
-        // $candidats = Candidat::where('categorie', $request->categorie)->get();
-        $candidats = Candidat::all();
-        // return response
+        $candidats = Candidat::where('categorie', $request->categorie)->get();
         return response()->json($candidats, 200);
     }
 

@@ -13,9 +13,16 @@ class Candidat extends Model
     use HasFactory;
 
     public const CATEGORIE_RADIO = [
-        '1' => 'Cat1',
-        '2' => 'Cat2',
-        '3' => 'Cat3',
+        '1' => "DSI INNOVANT(E)",
+        '2' => "DSI RESILIENT",
+        '3' => "LEADERSHIP FEMININ ",
+        '4' => "ADMINISTRATION INTELLIGENTE",
+        '5' => "COUP DE CŒUR",
+        '6' => "ENTREPRISE DIGITALE",
+        '7' => "INDUSTRIE 4.0",
+        '8' => "LEADER DU SERVICE IT",
+        '9' => "CHAMPION DE L’EDUCATION",
+        '10' => "DEFENSEURS",
     ];
 
     public $table = 'candidats';
@@ -29,7 +36,6 @@ class Candidat extends Model
     protected $fillable = [
         'order',
         'nom',
-        'prenom',
         'photo',
         'categorie',
         'vpro',

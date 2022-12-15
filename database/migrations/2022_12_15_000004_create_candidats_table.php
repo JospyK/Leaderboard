@@ -12,7 +12,6 @@ class CreateCandidatsTable extends Migration
             $table->bigIncrements('id');
             $table->integer('order')->nullable();
             $table->string('nom')->nullable();
-            $table->string('prenom')->nullable();
             $table->string('photo')->nullable();
             $table->string('categorie')->nullable();
             $table->integer('vpro')->nullable();
