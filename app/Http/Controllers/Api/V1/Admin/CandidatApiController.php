@@ -13,6 +13,14 @@ use Symfony\Component\HttpFoundation\Response;
 
 class CandidatApiController extends Controller
 {
+    public function race(Request $request)
+    {
+        // $candidats = Candidat::where('categorie', $request->categorie)->get();
+        $candidats = Candidat::all();
+        // return response
+        return response()->json($candidats, 200);
+    }
+
     public function index()
     {
         abort_if(Gate::denies('candidat_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
