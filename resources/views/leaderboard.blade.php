@@ -119,17 +119,17 @@
                             // })
                         }
 
-                        fetch('https://www.google.com', options)
+                        fetch('/api/race', options)
                             .then((response) => response.json())
                             .then((jsonResponse) => {
                                 //normalize response
                                 const newSet = {
-                                    date: getRandomArbitrary(2000, 2010) + "-" + getRandomArbitrary(1, 12) + "-" + getRandomArbitrary(1, 28),
-                                    user1: getRandomArbitrary(10, 1000),
-                                    user2: getRandomArbitrary(1, getRandomArbitrary(100, 1000)),
-                                    user3: getRandomArbitrary(1, 100),
-                                    user4: getRandomArbitrary(3, getRandomArbitrary(10, 100)),
-                                    user5: getRandomArbitrary(50, getRandomArbitrary(100, 1000)),
+                                    date: getRandomInt(2000, 2010) + "-" + getRandomInt(1, 12) + "-" + getRandomInt(1, 28),
+                                    user1: getRandomInt(10, 1000),
+                                    user2: getRandomInt(1, getRandomInt(100, 1000)),
+                                    user3: getRandomInt(1, 100),
+                                    user4: getRandomInt(3, getRandomInt(10, 100)),
+                                    user5: getRandomInt(50, getRandomInt(100, 1000)),
                                 }
 
                                 //   update existing datasets
