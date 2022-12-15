@@ -65,7 +65,7 @@
             data: {
                 errors: [],
                 file: null,
-                isLoadingDataSets: true,
+                isLoadingDataSets: false,
                 csv_data: null,
                 interval: null,
                 duration: 20,
@@ -74,8 +74,6 @@
                 title: "Realtime bar chart",
                 fileplaceholder: "Choose file",
                 realtime_data: [],
-                // realtime_data: testDatasets,
-                current_data_set_path: './datasets/test.csv'
             },
             mounted() {
                 setTimeout(() => {
@@ -87,7 +85,7 @@
                     deep: true,
                     handler(val, old) {
                         updatedDataSet(val)
-                        console.log('val :>> ', this.realtime_data);
+                        // console.log('val :>> ', this.realtime_data);
                         // if(this.interval) {this.interval.drawGraph()}
                         // else{
 
@@ -110,7 +108,7 @@
                             headers: {
                                 'Accept': 'application/json',
                                 'Content-Type': 'application/json',
-                                'Authorization': 'Bearer ${token}'
+                                // 'Authorization': 'Bearer ${token}'
                             },
 
                             // body: JSON.stringify({
@@ -122,23 +120,24 @@
                         fetch('/api/race', options)
                             .then((response) => response.json())
                             .then((jsonResponse) => {
-                                console.log('jsonResponse :>> ', jsonResponse);
+                                // console.log('jsonResponse :>> ', jsonResponse);
                                 //normalize response
                                 const newSet = {
                                     date: getRandomInt(2000, 2010) + "-" + getRandomInt(1, 12) + "-" + getRandomInt(1, 28),
-                                    user1: getRandomInt(10, 1000),
-                                    user2: getRandomInt(1, getRandomInt(100, 1000)),
-                                    user3: getRandomInt(1, 100),
-                                    user4: getRandomInt(3, getRandomInt(10, 100)),
-                                    user5: getRandomInt(50, getRandomInt(100, 1000)),
+                                    // user1: getRandomInt(10, 1000),
+                                    // user2: getRandomInt(1, getRandomInt(100, 1000)),
+                                    // user3: getRandomInt(1, 100),
+                                    // user4: getRandomInt(3, getRandomInt(10, 100)),
+                                    // user5: getRandomInt(50, getRandomInt(100, 1000)),
+                                    ...jsonResponse
                                 }
 
                                 //   update existing datasets
                                 this.realtime_data.push(newSet)
 
-
+ if(this.interval === null) {this.startRace()}
                             }).catch(err => {
-                                console.log('err :>> ', err);
+                                // console.log('err :>> ', err);
                             })
                         // if (!this.isAuthenticated) return;
                         // if (reset) {
@@ -156,7 +155,7 @@
                             // timer += 1000;
                             // console.log(timer)
                             updatechartdaemon();
-                        }, 1000);
+                        }, 5000);
                     };
                     updatechartdaemon();
 
@@ -173,8 +172,9 @@
                     if (self.interval !== null) {
                         self.interval.stop()
                     }
-                    if (!this.realtime_data || this.realtime_data.length ===0) {
+                    if (!this.realtime_data || this.realtime_data.length === 0) {
                         this.fetchDataSet()
+                        // this.startRace()
                         return
                     }
                     if (self.tickDuration && self.top_n) {
