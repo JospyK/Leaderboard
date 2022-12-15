@@ -2,7 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Models\Candidat;
 use App\Models\User;
+use Database\Factories\CandidatFactory;
 use Illuminate\Database\Seeder;
 
 class UsersTableSeeder extends Seeder
@@ -20,5 +22,9 @@ class UsersTableSeeder extends Seeder
         ];
 
         User::insert($users);
+
+        Candidat::factory(10)->create();
+
+
     }
 }
