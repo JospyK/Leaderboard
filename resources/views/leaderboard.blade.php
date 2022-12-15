@@ -122,6 +122,7 @@
                         fetch('/api/race', options)
                             .then((response) => response.json())
                             .then((jsonResponse) => {
+                                console.log('jsonResponse :>> ', jsonResponse);
                                 //normalize response
                                 const newSet = {
                                     date: getRandomInt(2000, 2010) + "-" + getRandomInt(1, 12) + "-" + getRandomInt(1, 28),
