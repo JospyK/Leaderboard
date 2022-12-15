@@ -26,7 +26,7 @@
                         <div class="container">
                             <h1 id="main-title" class="">
                                 <p class="item">
-                                    <select name="categorie" id="">
+                                    <select name="categorie" id="" v-model="form.categorie">
                                         <option value="">Selectionner la catégorie</option>
                                         <option value="1">DSI INNOVANT(E)</option>
                                         <option value="2">DSI RESILIENT</option>
@@ -105,6 +105,10 @@
                 title: "Candidats",
                 fileplaceholder: "Choose file",
                 realtime_data: null,
+                daemonTimer: null,
+                form:{
+                    categorie: ''
+                }
             },
             mounted() {
                 setTimeout(() => {
@@ -123,10 +127,17 @@
                         //   this.startRace({preventDefault:()=>{}})
                         // }
                     }
+                },
+                "form.categorie": {
+                    handler(val, old) {
+                        console.log('val :>> ', val);
+                        this.fetchDataSet()
+                    }
                 }
             },
             methods: {
                 fetchDataSet: function () {
+                    clearTimeout(this.daemonTimer)
                     const getRandomInt = (min, max) => {
                         min = Math.ceil(min);
                         max = Math.floor(max);
@@ -147,8 +158,9 @@
                             //     content: 'Contenu de mon post'
                             // })
                         }
+                        const raceEndpoint = '/api/race?categorie='+this.form.categorie
 
-                        fetch('/api/race', options)
+                        fetch(raceEndpoint, options)
                             .then((response) => response.json())
                             .then((jsonResponse) => {
                                 // console.log('jsonResponse :>> ', jsonResponse);
@@ -170,7 +182,7 @@
                             }).catch(err => {
                                 // console.log('err :>> ', err);
                             })
-                        setTimeout(() => {
+                        this.daemonTimer = setTimeout(() => {
                             updatechartdaemon();
                         }, 5000);
                     };
