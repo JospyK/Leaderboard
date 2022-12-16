@@ -41,14 +41,10 @@
                                     </select>
                                 </p>
                             </h1>
-<!-- ((realtime_data)) -->
+                            <!-- ((realtime_data)) -->
 
                             <div id="chart-card" class="card">
                                 <div class="card-body position-relative">
-                                    <div class="text-right mb-4" v-if="false">
-                                        <button type="button" class="btn btn-xs btn-outline-primary"
-                                            v-on:click="startRace">Infinite</button>
-                                    </div>
                                     <h5 class="card-title" id="graph-title">((title))</h5>
                                     <div id="chartDiv" style="width:100%; height: 650px"></div>
                                     <!-- <p style="position:absolute;top:50%;left:50%;font-size:1.125rem;transform: translate(-50%,-50%)"
@@ -99,20 +95,25 @@
                 isLoadingDataSets: true,
                 csv_data: null,
                 interval: null,
-                duration: 20,
+                duration: 1,
                 tickDuration: 1,
+                fetchdaemon_interval: 1000,
                 top_n: 10,
                 title: "Candidats",
                 fileplaceholder: "Choose file",
                 realtime_data: null,
                 daemonTimer: null,
-                form:{
+                form: {
                     categorie: ''
-                }
+                },
+                previousJsonResponse: {},
+                max_dupicate_set: 3,
+                duplicate_set_count: 0,
+
             },
             mounted() {
                 // setTimeout(() => {
-                    this.startRace({ preventDefault: () => { } })
+                this.startRace({ preventDefault: () => { } })
                 // }, 2000);
             },
             watch: {
@@ -130,7 +131,6 @@
                 },
                 "form.categorie": {
                     handler(val, old) {
-                        console.log('val :>> ', val);
                         this.realtime_data = null
                         this.interval = null
                         this.startRace()
@@ -161,35 +161,53 @@
                             //     content: 'Contenu de mon post'
                             // })
                         }
-                        const raceEndpoint = '/api/race?categorie='+this.form.categorie
+
+                        const raceEndpoint = '/api/race?categorie=' + this.form.categorie
 
                         fetch(raceEndpoint, options)
                             .then((response) => response.json())
                             .then((jsonResponse) => {
-                                // console.log('jsonResponse :>> ', jsonResponse);
+                                // const isSameAsPreviousSet = _.isEqual(this.previousJsonResponse, jsonResponse)
+                                // this.duplicate_set_count = isSameAsPreviousSet ? this.duplicate_set_count + 1 : 0
+                                // console.log(isSameAsPreviousSet, this.max_dupicate_set, this.duplicate_set_count);
+                                // this.previousJsonResponse = jsonResponse
+                                // if (this.duplicate_set_count > this.max_dupicate_set) {
+                                //     this.isLoadingDataSets = false;
+                                //     return
+                                // }
+
                                 //normalize response
+                                const setSample = {
+                                    date: getRandomInt(2000, 2010) + "-" + getRandomInt(1, 12) + "-" + getRandomInt(1, 28),
+                                    user1: getRandomInt(10, 1000),
+                                    user2: getRandomInt(1, getRandomInt(100, 1000)),
+                                    user3: getRandomInt(1, 100),
+                                    user4: getRandomInt(3, getRandomInt(10, 100)),
+                                    user5: getRandomInt(50, getRandomInt(100, 1000)),
+                                }
                                 const newSet = {
                                     date: getRandomInt(2000, 2010) + "-" + getRandomInt(1, 12) + "-" + getRandomInt(1, 28),
-                                    // user1: getRandomInt(10, 1000),
-                                    // user2: getRandomInt(1, getRandomInt(100, 1000)),
-                                    // user3: getRandomInt(1, 100),
-                                    // user4: getRandomInt(3, getRandomInt(10, 100)),
-                                    // user5: getRandomInt(50, getRandomInt(100, 1000)),
                                     ...jsonResponse
                                 }
 
                                 //   update existing datasets
-                                this.realtime_data = [...(this.realtime_data||[]), (newSet)]
+                                this.realtime_data = [...(this.realtime_data || []), (newSet)]
+
                                 if (this.interval === null) { this.startRace() }
-                                this.isLoadingDataSets = false;
+
+
                             }).catch(err => {
                                 this.isLoadingDataSets = false;
                                 // console.log('err :>> ', err);
                             })
+
+                        // loop    
                         this.daemonTimer = setTimeout(() => {
                             updatechartdaemon();
-                        }, 5000);
+                        }, this.fetchdaemon_interval);
                     };
+
+                    // start daemon
                     updatechartdaemon();
 
                 },
@@ -201,17 +219,15 @@
                     }
                 },
                 startRace: function (e) {
-                    console.log('enter');
                     var self = this;
                     if (self.interval !== null) {
                         self.interval.stop()
                     }
                     if (!this.realtime_data || this.realtime_data.length === 0) {
                         this.fetchDataSet()
-                      
+
                         return
                     }
-                    console.log('dont');
                     if (self.tickDuration && self.top_n) {
                         // e.preventDefault();
                         this.top_n = parseInt(self.top_n);

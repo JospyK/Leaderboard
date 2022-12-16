@@ -1,9 +1,9 @@
 var dataSet = []
-function updatedDataSet(newData){
-     dataSet = newData || []
+function updatedDataSet(newData) {
+    dataSet = newData || []
 }
-function getDataSet(){
-     return dataSet
+function getDataSet() {
+    return dataSet
 }
 
 function createBarChartRace(data, top_n, tickDuration) {
@@ -34,14 +34,15 @@ function createBarChartRace(data, top_n, tickDuration) {
     let barPadding = (height - (margin.bottom + margin.top)) / (top_n * 5);
 
     function getRowData(data, column_names, row_index) {
-        const row = data[row_index];
+        const tmpData = JSON.parse(JSON.stringify(data))
+        const row = tmpData[row_index];
         let new_data = column_names.map((name) => {
-            return {name: name, value: row[name]}
+            return { name: name, value: row[name] }
         });
         new_data = new_data.sort((a, b) => b.value - a.value).slice(0, top_n);
         new_data.forEach((d, i) => {
             d.rank = i;
-            d.lastValue = (row_index > 0) ? data[row_index - 1][d.name] : d.value;
+            d.lastValue = (row_index > 0) ? tmpData[row_index - 1][d.name] : d.value;
         });
         return [row[d3.keys(row)[0]], new_data]
     }
@@ -69,10 +70,10 @@ function createBarChartRace(data, top_n, tickDuration) {
 
     // draw the first frame
 
-    [time, row_data] = getRowData(data, column_names, 0);
+    [time, row_data] = getRowData(getDataSet(), column_names, 0);
 
-    start_date = d3.min(getDataSet, d => d[time_index]);
-    end_date = d3.max(getDataSet, d => d[time_index]);
+    start_date = d3.min(getDataSet(), d => d[time_index]);
+    end_date = d3.max(getDataSet(), d => d[time_index]);
 
     let t = d3.scaleTime()
         .domain([start_date, end_date])
@@ -162,7 +163,8 @@ function createBarChartRace(data, top_n, tickDuration) {
     //     .html(d3.timeFormat("%B %d, %Y")(time));
 
     // draw the updated graph with transitions
-    function drawGraph() {
+    function drawGraph(row_data) {
+        // if(!row_data) return
         // update xAxis with new domain
         x.domain([0, d3.max(row_data, d => d.value)]);
         svg.select('.xAxis')
@@ -185,13 +187,13 @@ function createBarChartRace(data, top_n, tickDuration) {
             .transition()
             .duration(tickDuration)
             .ease(d3.easeLinear)
-            // .attr('y', d => y(d.rank) + barPadding / 2);
+        // .attr('y', d => y(d.rank) + barPadding / 2);
 
         bars.transition()
             .duration(tickDuration)
             .ease(d3.easeLinear)
             .attr('width', d => x(d.value) - x(0))
-            // .attr('y', d => y(d.rank) + barPadding / 2);
+        // .attr('y', d => y(d.rank) + barPadding / 2);
 
         bars.exit()
             .transition()
@@ -213,20 +215,20 @@ function createBarChartRace(data, top_n, tickDuration) {
             .transition()
             .duration(tickDuration)
             .ease(d3.easeLinear)
-            // .attr('y', d => y(d.rank) + ((y(1) - y(0)) / 2) + 1);
+        // .attr('y', d => y(d.rank) + ((y(1) - y(0)) / 2) + 1);
 
         labels.transition()
             .duration(tickDuration)
             .ease(d3.easeLinear)
             .attr('x', d => x(d.value) - 8)
-            // .attr('y', d => y(d.rank) + ((y(1) - y(0)) / 2) + 1);
+        // .attr('y', d => y(d.rank) + ((y(1) - y(0)) / 2) + 1);
 
         labels.exit()
             .transition()
             .duration(tickDuration)
             .ease(d3.easeLinear)
             .attr('x', d => x(d.value) - 8)
-            // .attr('y', d => y(top_n + 1)).remove();
+        // .attr('y', d => y(top_n + 1)).remove();
 
         // update value labels
 
@@ -242,7 +244,7 @@ function createBarChartRace(data, top_n, tickDuration) {
             .transition()
             .duration(tickDuration)
             .ease(d3.easeLinear)
-            // .attr('y', d => y(d.rank) + ((y(1) - y(0)) / 2) + 1);
+        // .attr('y', d => y(d.rank) + ((y(1) - y(0)) / 2) + 1);
 
         valueLabels
             .transition()
@@ -264,7 +266,7 @@ function createBarChartRace(data, top_n, tickDuration) {
             .duration(tickDuration)
             .ease(d3.easeLinear)
             .attr('x', d => x(d.value) + 5)
-            // .attr('y', d => y(top_n + 1)).remove()
+        // .attr('y', d => y(top_n + 1)).remove()
 
         // update time label and progress bar
         // d3.select('.progressBar')
@@ -281,17 +283,21 @@ function createBarChartRace(data, top_n, tickDuration) {
     }
 
     // loop
-    let i = 1;
+    let i = 0;
     let interval = d3.interval((e) => {
         [time, row_data] = getRowData(getDataSet(), column_names, i);
-        drawGraph();
+        drawGraph(row_data);
         // increment loop
-        i += 1
-        if (i == getDataSet().length) interval.stop()
+        if (i == getDataSet().length) {
+            i = getDataSet().length - 1
+        }else{
+            i+=1
+        }
+        // if (i == getDataSet().length) interval.stop()
 
 
     }, tickDuration)
-    return interval
+    return JSON.parse(JSON.stringify(interval))
 
 
 }
