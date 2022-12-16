@@ -20,8 +20,15 @@ class CandidatApiController extends Controller
         $candidats->when($request->categorie, function($q) use ($request){
             return $q->where('categorie', intval($request->categorie));
         });
-        $candidats = $candidats->pluck('total', 'nom');
-        return response()->json($candidats, 200);
+
+        $data = [
+            'vpro' => $candidats->pluck('vpro', 'nom'),
+            'vjury' => $candidats->pluck('vjury', 'nom'),
+            'vpublic' => $candidats->pluck('vpublic', 'nom'),
+            'total' => $candidats->pluck('total', 'nom'),
+        ];
+
+        return response()->json($data, 200);
     }
 
     public function index()
