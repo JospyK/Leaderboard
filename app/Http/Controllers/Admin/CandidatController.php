@@ -56,9 +56,10 @@ class CandidatController extends Controller
     {
 
         $message = [];
-        $check_vjury = Candidat::where('categorie', $candidat->categorie)->where('vjury', $request->vjury)->first();
-        $check_vpro = Candidat::where('categorie', $candidat->categorie)->where('vpro', $request->vpro)->first();
-        $check_vpublic = Candidat::where('categorie', $candidat->categorie)->where('vpublic', $request->vpublic)->first();
+        $candidats = Candidat::where('categorie', $candidat->categorie)->where('id', '<>', $candidat->id);
+        $check_vjury = $candidats->where('vjury', $request->vjury)->first();
+        $check_vpro = $candidats->where('vpro', $request->vpro)->first();
+        $check_vpublic = $candidats->where('vpublic', $request->vpublic)->first();
 
         if($check_vjury) {
             array_push($message, "Le candidat: " .$check_vjury->nom. " occupe deja la position (vjury): ". $request->vjury);
@@ -71,6 +72,7 @@ class CandidatController extends Controller
         }
 
         if (!$message) {
+            //dd($request->all());
             $candidat->update($request->all());
             $candidat->total= $candidat->vpro + $candidat->vjury + $candidat->vpublic;
             $candidat->save();

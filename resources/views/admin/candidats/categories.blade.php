@@ -85,8 +85,8 @@
                                                         <label class="form-check-label" for="vpro1">1</label>
                                                     </div>
                                                     <div class="form-check form-check-inline">
-                                                        <input {{ old('vpro', $c->vpro) == 2 ? 'checked' : '' }} class="form-check-input" type="radio" name="vpro" id="vpro3" value=3>
-                                                        <label class="form-check-label" for="vpro3">2</label>
+                                                        <input {{ old('vpro', $c->vpro) == 2 ? 'checked' : '' }} class="form-check-input" type="radio" name="vpro" id="vpro2" value=2>
+                                                        <label class="form-check-label" for="vpro2">2</label>
                                                     </div>
                                                     <div class="form-check form-check-inline">
                                                         <input {{ old('vpro', $c->vpro) == 3 ? 'checked' : '' }} class="form-check-input" type="radio" name="vpro" id="vpro3" value=3>
@@ -117,8 +117,8 @@
                                                         <label class="form-check-label" for="vjury1">1</label>
                                                     </div>
                                                     <div class="form-check form-check-inline">
-                                                        <input {{ old('vjury', $c->vjury) == 2 ? 'checked' : '' }} class="form-check-input" type="radio" name="vjury" id="vjury3" value=3>
-                                                        <label class="form-check-label" for="vjury3">2</label>
+                                                        <input {{ old('vjury', $c->vjury) == 2 ? 'checked' : '' }} class="form-check-input" type="radio" name="vjury" id="vjury2" value=2>
+                                                        <label class="form-check-label" for="vjury2">2</label>
                                                     </div>
                                                     <div class="form-check form-check-inline">
                                                         <input {{ old('vjury', $c->vjury) == 3 ? 'checked' : '' }} class="form-check-input" type="radio" name="vjury" id="vjury3" value=3>
@@ -146,8 +146,8 @@
                                                         <label class="form-check-label" for="vpublic1">1</label>
                                                     </div>
                                                     <div class="form-check form-check-inline">
-                                                        <input {{ old('vpublic', $c->vpublic) == 2 ? 'checked' : '' }} class="form-check-input" type="radio" name="vpublic" id="vpublic3" value=3>
-                                                        <label class="form-check-label" for="vpublic3">2</label>
+                                                        <input {{ old('vpublic', $c->vpublic) == 2 ? 'checked' : '' }} class="form-check-input" type="radio" name="vpublic" id="vpublic2" value=2>
+                                                        <label class="form-check-label" for="vpublic2">2</label>
                                                     </div>
                                                     <div class="form-check form-check-inline">
                                                         <input {{ old('vpublic', $c->vpublic) == 3 ? 'checked' : '' }} class="form-check-input" type="radio" name="vpublic" id="vpublic3" value=3>
