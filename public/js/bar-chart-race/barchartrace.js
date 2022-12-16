@@ -95,7 +95,7 @@ function createBarChartRace(data, top_n, tickDuration) {
         .scale(x)
         .ticks(5)
         .tickSize(-(height - margin.top - margin.bottom))
-        .tickFormat(d => d3.format(',')(d));
+        // .tickFormat(d => d3.format(',')(d));
 
 
     svg.append('g')
@@ -154,6 +154,7 @@ function createBarChartRace(data, top_n, tickDuration) {
         .attr('transform', `translate(${marginTimeAxis}, 20)`)
         .attr('height', 2)
         .attr('width', 0);
+        
 
     // let timeText = svg.append('text')
     //     .attr('class', 'timeText')
@@ -209,7 +210,7 @@ function createBarChartRace(data, top_n, tickDuration) {
         labels.enter().append('text')
             .attr('class', 'label')
             .attr('x', d => x(d.value) - 8)
-            .attr('y', d => y(top_n + 1) + ((y(1) - y(0)) / 2))
+            // .attr('y', d => y(top_n + 1) + ((y(1) - y(0)) / 2))
             .style('text-anchor', 'end')
             .html(d => d.name)
             .transition()
@@ -239,7 +240,7 @@ function createBarChartRace(data, top_n, tickDuration) {
             .append('text')
             .attr('class', 'valueLabel')
             .attr('x', d => x(d.value) + 5)
-            .attr('y', d => y(top_n + 1))
+            // .attr('y', d => y(top_n + 1))
             .text(d => d3.format(',.0f')(d.lastValue))
             .transition()
             .duration(tickDuration)
@@ -285,14 +286,19 @@ function createBarChartRace(data, top_n, tickDuration) {
     // loop
     let i = 0;
     let interval = d3.interval((e) => {
+        if (i >= getDataSet().length) {
+            i = getDataSet().length - 1
+        }
         [time, row_data] = getRowData(getDataSet(), column_names, i);
         drawGraph(row_data);
         // increment loop
-        if (i == getDataSet().length) {
+        // console.log('i :>> ', i, getDataSet().length);
+        if (i >= getDataSet().length) {
             i = getDataSet().length - 1
         }else{
             i+=1
         }
+
         // if (i == getDataSet().length) interval.stop()
 
 

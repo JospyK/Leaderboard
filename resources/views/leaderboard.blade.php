@@ -95,14 +95,14 @@
                 interval: null,
                 duration: 1,
                 tickDuration: 1,
-                fetchdaemon_interval: 1000,
+                fetchdaemon_interval: 3000,
                 top_n: 10,
                 title: "Candidats",
                 fileplaceholder: "Choose file",
                 realtime_data: null,
                 daemonTimer: null,
                 previousJsonResponse: {},
-                max_dupicate_set: 3,
+                max_duplicate_set: 3,
                 duplicate_set_count: 0,
                 selectedCategorie: ''
 
@@ -148,14 +148,14 @@
                         fetch(raceEndpoint, options)
                             .then((response) => response.json())
                             .then((jsonResponse) => {
-                                // const isSameAsPreviousSet = _.isEqual(this.previousJsonResponse, jsonResponse)
-                                // this.duplicate_set_count = isSameAsPreviousSet ? this.duplicate_set_count + 1 : 0
-                                // console.log(isSameAsPreviousSet, this.max_dupicate_set, this.duplicate_set_count);
-                                // this.previousJsonResponse = jsonResponse
-                                // if (this.duplicate_set_count > this.max_dupicate_set) {
-                                //     this.isLoadingDataSets = false;
-                                //     return
-                                // }
+                                const isSameAsPreviousSet = _.isEqual(this.previousJsonResponse, jsonResponse)
+                                this.duplicate_set_count = isSameAsPreviousSet ? this.duplicate_set_count + 1 : 0
+                                if (this.duplicate_set_count > this.max_duplicate_set) {
+                                    this.isLoadingDataSets = false;
+                                    return
+                                }
+                                this.previousJsonResponse = jsonResponse
+                                console.log(isSameAsPreviousSet, this.max_duplicate_set, this.duplicate_set_count);
 
                                 //normalize response
                                 const setSample = {
