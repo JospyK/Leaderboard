@@ -78,27 +78,27 @@
                                                 @method('PUT')
                                                 @csrf
                                                 <div class="form-group">
-                                                    <label for="vpro">{{ trans('cruds.candidat.fields.vpro') }}</label>
+                                                    <label class="mr-4" for="vpro">{{ trans('cruds.candidat.fields.vpro') }}: </label>
 
                                                     <div class="form-check form-check-inline">
-                                                        <input {{ old('vpro', $c->vpro) == 1 ? 'checked' : '' }} class="form-check-input" type="radio" name="vpro" id="inlineRadio1" value="option1">
-                                                        <label class="form-check-label" for="inlineRadio1">1</label>
+                                                        <input {{ old('vpro', $c->vpro) == 1 ? 'checked' : '' }} class="btn-check" type="radio" name="vpro" id="vpro1" value=1>
+                                                        <label class="form-check-label" for="vpro1">1</label>
                                                     </div>
                                                     <div class="form-check form-check-inline">
-                                                        <input {{ old('vpro', $c->vpro) == 2 ? 'checked' : '' }} class="form-check-input" type="radio" name="vpro" id="inlineRadio3" value="option3">
-                                                        <label class="form-check-label" for="inlineRadio3">2</label>
+                                                        <input {{ old('vpro', $c->vpro) == 2 ? 'checked' : '' }} class="form-check-input" type="radio" name="vpro" id="vpro3" value=3>
+                                                        <label class="form-check-label" for="vpro3">2</label>
                                                     </div>
                                                     <div class="form-check form-check-inline">
-                                                        <input {{ old('vpro', $c->vpro) == 3 ? 'checked' : '' }} class="form-check-input" type="radio" name="vpro" id="inlineRadio3" value="option3">
-                                                        <label class="form-check-label" for="inlineRadio3">3</label>
+                                                        <input {{ old('vpro', $c->vpro) == 3 ? 'checked' : '' }} class="form-check-input" type="radio" name="vpro" id="vpro3" value=3>
+                                                        <label class="form-check-label" for="vpro3">3</label>
                                                     </div>
                                                     <div class="form-check form-check-inline">
-                                                        <input {{ old('vpro', $c->vpro) == 4 ? 'checked' : '' }} class="form-check-input" type="radio" name="vpro" id="inlineRadio4" value="option4">
-                                                        <label class="form-check-label" for="inlineRadio4">4</label>
+                                                        <input {{ old('vpro', $c->vpro) == 4 ? 'checked' : '' }} class="form-check-input" type="radio" name="vpro" id="vpro4" value=4>
+                                                        <label class="form-check-label" for="vpro4">4</label>
                                                     </div>
                                                     <div class="form-check form-check-inline">
-                                                        <input {{ old('vpro', $c->vpro) == 5 ? 'checked' : '' }} class="form-check-input" type="radio" name="vpro" id="inlineRadio5" value="option5">
-                                                        <label class="form-check-label" for="inlineRadio5">5</label>
+                                                        <input {{ old('vpro', $c->vpro) == 5 ? 'checked' : '' }} class="form-check-input" type="radio" name="vpro" id="vpro5" value=5>
+                                                        <label class="form-check-label" for="vpro5">5</label>
                                                     </div>
 
 
@@ -110,15 +110,28 @@
                                                     <span class="help-block">{{ trans('cruds.candidat.fields.vpro_helper') }}</span>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="vjury">{{ trans('cruds.candidat.fields.vjury') }}</label>
-                                                    <select class="form-control {{ $errors->has('vjury') ? 'is-invalid' : '' }}" type="number" name="vjury" id="vjury">
-                                                        <option selected value="0">Selectionner</option>
-                                                        <option {{ ($c->vjury == 1 ||  old('vjury', $c->vjury) == 1) ? 'selected' : ''}} value=1>1</option>
-                                                        <option {{ ($c->vjury == 2 ||  old('vjury', $c->vjury) == 2) ? 'selected' : ''}} value=2>2</option>
-                                                        <option {{ ($c->vjury == 3 ||  old('vjury', $c->vjury) == 3) ? 'selected' : ''}} value=3>3</option>
-                                                        <option {{ ($c->vjury == 4 ||  old('vjury', $c->vjury) == 4) ? 'selected' : ''}} value=4>4</option>
-                                                        <option {{ ($c->vjury == 5 ||  old('vjury', $c->vjury) == 5) ? 'selected' : ''}} value=5>5</option>
-                                                    </select>
+                                                    <label class="mr-4" for="vjury">{{ trans('cruds.candidat.fields.vjury') }}: </label>
+
+                                                    <div class="form-check form-check-inline">
+                                                        <input {{ old('vjury', $c->vjury) == 1 ? 'checked' : '' }} class="btn-check" type="radio" name="vjury" id="vjury1" value=1>
+                                                        <label class="form-check-label" for="vjury1">1</label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline">
+                                                        <input {{ old('vjury', $c->vjury) == 2 ? 'checked' : '' }} class="form-check-input" type="radio" name="vjury" id="vjury3" value=3>
+                                                        <label class="form-check-label" for="vjury3">2</label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline">
+                                                        <input {{ old('vjury', $c->vjury) == 3 ? 'checked' : '' }} class="form-check-input" type="radio" name="vjury" id="vjury3" value=3>
+                                                        <label class="form-check-label" for="vjury3">3</label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline">
+                                                        <input {{ old('vjury', $c->vjury) == 4 ? 'checked' : '' }} class="form-check-input" type="radio" name="vjury" id="vjury4" value=4>
+                                                        <label class="form-check-label" for="vjury4">4</label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline">
+                                                        <input {{ old('vjury', $c->vjury) == 5 ? 'checked' : '' }} class="form-check-input" type="radio" name="vjury" id="vjury5" value=5>
+                                                        <label class="form-check-label" for="vjury5">5</label>
+                                                    </div>
                                                     @if($errors->has('vjury'))
                                                         <div class="invalid-feedback">
                                                             {{ $errors->first('vjury') }}
@@ -127,15 +140,27 @@
                                                     <span class="help-block">{{ trans('cruds.candidat.fields.vjury_helper') }}</span>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="vpublic">{{ trans('cruds.candidat.fields.vpublic') }}</label>
-                                                    <select class="form-control {{ $errors->has('vpublic') ? 'is-invalid' : '' }}" type="number" name="vpublic" id="vpublic">
-                                                        <option selected value="0">Selectionner</option>
-                                                        <option {{ ($c->vpublic == 1 ||  old('vpublic', $c->vpublic) == 1) ? 'selected' : ''}} value=1>1</option>
-                                                        <option {{ ($c->vpublic == 2 ||  old('vpublic', $c->vpublic) == 2) ? 'selected' : ''}} value=2>2</option>
-                                                        <option {{ ($c->vpublic == 3 ||  old('vpublic', $c->vpublic) == 3) ? 'selected' : ''}} value=3>3</option>
-                                                        <option {{ ($c->vpublic == 4 ||  old('vpublic', $c->vpublic) == 4) ? 'selected' : ''}} value=4>4</option>
-                                                        <option {{ ($c->vpublic == 5 ||  old('vpublic', $c->vpublic) == 5) ? 'selected' : ''}} value=5>5</option>
-                                                    </select>
+                                                    <label class="mr-4" for="vpublic">{{ trans('cruds.candidat.fields.vpublic') }}: </label>
+                                                    <div class="form-check form-check-inline">
+                                                        <input {{ old('vpublic', $c->vpublic) == 1 ? 'checked' : '' }} class="btn-check" type="radio" name="vpublic" id="vpublic1" value=1>
+                                                        <label class="form-check-label" for="vpublic1">1</label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline">
+                                                        <input {{ old('vpublic', $c->vpublic) == 2 ? 'checked' : '' }} class="form-check-input" type="radio" name="vpublic" id="vpublic3" value=3>
+                                                        <label class="form-check-label" for="vpublic3">2</label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline">
+                                                        <input {{ old('vpublic', $c->vpublic) == 3 ? 'checked' : '' }} class="form-check-input" type="radio" name="vpublic" id="vpublic3" value=3>
+                                                        <label class="form-check-label" for="vpublic3">3</label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline">
+                                                        <input {{ old('vpublic', $c->vpublic) == 4 ? 'checked' : '' }} class="form-check-input" type="radio" name="vpublic" id="vpublic4" value=4>
+                                                        <label class="form-check-label" for="vpublic4">4</label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline">
+                                                        <input {{ old('vpublic', $c->vpublic) == 5 ? 'checked' : '' }} class="form-check-input" type="radio" name="vpublic" id="vpublic5" value=5>
+                                                        <label class="form-check-label" for="vpublic5">5</label>
+                                                    </div>
                                                     @if($errors->has('vpublic'))
                                                         <div class="invalid-feedback">
                                                             {{ $errors->first('vpublic') }}
