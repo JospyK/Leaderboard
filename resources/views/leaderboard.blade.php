@@ -3,11 +3,8 @@
 
 <head>
     <title>
-        Bar chart race
+        Candidats
     </title>
-    <meta property="og:title" content="Opensource bar chart race generator">
-    <meta property="og:description"
-        content="Generate your own bar chart race from a csv file thanks to this open source tool made by FabDev">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- Bootstrap CSS -->
@@ -26,7 +23,8 @@
                         <div class="container">
                             <h1 id="main-title" class="">
                                 <p class="item">
-                                    <select name="categorie" id="" v-model="form.categorie">
+                                    <select name="categorie" id="" v-model="selectedCategorie"
+                                        @change="onCategorieChange">
                                         <option value="">Selectionner la catégorie</option>
                                         <option value="1">DSI INNOVANT(E)</option>
                                         <option value="2">DSI RESILIENT</option>
@@ -103,15 +101,15 @@
                 fileplaceholder: "Choose file",
                 realtime_data: null,
                 daemonTimer: null,
-                form: {
-                    categorie: ''
-                },
                 previousJsonResponse: {},
                 max_dupicate_set: 3,
                 duplicate_set_count: 0,
+                selectedCategorie: ''
 
             },
             mounted() {
+                let params = (new URL(document.location)).searchParams;
+                this.selectedCategorie = params.get("categorie");
                 // setTimeout(() => {
                 this.startRace({ preventDefault: () => { } })
                 // }, 2000);
@@ -121,21 +119,9 @@
                     deep: true,
                     handler(val, old) {
                         updatedDataSet(val)
-                        // console.log('val :>> ', this.realtime_data);
-                        // if(this.interval) {this.interval.drawGraph()}
-                        // else{
-
-                        //   this.startRace({preventDefault:()=>{}})
-                        // }
                     }
                 },
-                "form.categorie": {
-                    handler(val, old) {
-                        this.realtime_data = null
-                        this.interval = null
-                        this.startRace()
-                    }
-                }
+
             },
             methods: {
                 fetchDataSet: function () {
@@ -153,16 +139,11 @@
                             headers: {
                                 'Accept': 'application/json',
                                 'Content-Type': 'application/json',
-                                // 'Authorization': 'Bearer ${token}'
                             },
 
-                            // body: JSON.stringify({
-                            //     title: 'Un post',
-                            //     content: 'Contenu de mon post'
-                            // })
                         }
 
-                        const raceEndpoint = '/api/race?categorie=' + this.form.categorie
+                        const raceEndpoint = '/api/race?categorie=' + this.selectedCategorie
 
                         fetch(raceEndpoint, options)
                             .then((response) => response.json())
@@ -201,13 +182,11 @@
                                 // console.log('err :>> ', err);
                             })
 
-                        // loop    
                         this.daemonTimer = setTimeout(() => {
                             updatechartdaemon();
                         }, this.fetchdaemon_interval);
                     };
 
-                    // start daemon
                     updatechartdaemon();
 
                 },
@@ -252,38 +231,8 @@
                     //   e.preventDefault();
                     //   window.scrollTo({ top: $("#chart-card").offset().top - 10, behavior: 'smooth' });
                 },
-                checkForm: function (e) {
-                    var self = this;
-                    if (self.interval !== null) {
-                        self.interval.stop()
-                    }
-                    console.log('this.csv_data :>> ', this.csv_data);
-                    if (!this.csv_data) {
-                        return
-                    }
-                    if (self.tickDuration && self.top_n) {
-                        e.preventDefault();
-                        this.top_n = parseInt(self.top_n);
-                        this.duration = parseInt(self.duration);
-                        this.tickDuration = self.duration / self.csv_data.length * 1000
-                        let chartDiv = document.getElementById("chartDiv");
-                        var data = JSON.parse(JSON.stringify(self.csv_data))
-                        self.interval = createBarChartRace(data, self.top_n, self.tickDuration);
-                    }
-
-                    self.errors = [];
-
-                    if (!self.csv_data) {
-                        self.errors.push('csv file is required');
-                    }
-                    if (!self.tickDuration) {
-                        self.errors.push('Time between frames required.');
-                    }
-                    if (!self.top_n) {
-                        self.errors.push('Number of bars to display required.');
-                    }
-                    e.preventDefault();
-                    window.scrollTo({ top: $("#chart-card").offset().top - 10, behavior: 'smooth' });
+                onCategorieChange: function () {
+                    window.location.href = window.location.origin + window.location.pathname + '?categorie=' + this.selectedCategorie
                 }
             },
             delimiters: ["((", "))"]
