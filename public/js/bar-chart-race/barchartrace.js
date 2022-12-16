@@ -1,14 +1,21 @@
-var dataSet = []
-function updatedDataSet(newData) {
-    dataSet = newData || []
+var dataSet = {
+    total: null,
+    vpro: null,
+    vjury: null,
+    vpublic: null,
 }
-function getDataSet() {
-    return dataSet
+function updatedDataSet(newData, key) {
+    dataSet[key] = newData || []
+}
+function getDataSet(key="total") {
+    return dataSet[key]
 }
 
-function createBarChartRace(data, top_n, tickDuration, htmlEl="chartDiv") {
+function createBarChartRace(data, top_n, tickDuration, options) {
     var data = data;
-    updatedDataSet(data)
+    const htmlEl= options.htmlEl || "totalChart"
+    const datasetKey = options.datasetKey || 'total'
+    updatedDataSet(data, datasetKey)
     let chartDiv = document.getElementById(htmlEl);
     chartDiv.textContent = '';
     let width = chartDiv.clientWidth;
@@ -47,8 +54,8 @@ function createBarChartRace(data, top_n, tickDuration, htmlEl="chartDiv") {
         return [row[d3.keys(row)[0]], new_data]
     }
 
-    const time_index = d3.keys(getDataSet()[0])[0];
-    const column_names = d3.keys(getDataSet()[0]).slice(1,);
+    const time_index = d3.keys(getDataSet(datasetKey)[0])[0];
+    const column_names = d3.keys(getDataSet(datasetKey)[0]).slice(1,);
 
     // define a random color for each column
     const colors = {};
@@ -58,8 +65,8 @@ function createBarChartRace(data, top_n, tickDuration, htmlEl="chartDiv") {
         colors[name] = color_scale(i)
     });
 
-    // Parse getDataSet()
-    getDataSet().forEach((d) => {
+    // Parse getDataSet(datasetKey)
+    getDataSet(datasetKey).forEach((d) => {
         // first column : YYYY-MM-DD
         const parseTime = d3.timeParse("%Y-%m-%d");
         d[time_index] = parseTime(d[time_index]);
@@ -70,10 +77,10 @@ function createBarChartRace(data, top_n, tickDuration, htmlEl="chartDiv") {
 
     // draw the first frame
 
-    [time, row_data] = getRowData(getDataSet(), column_names, 0);
+    [time, row_data] = getRowData(getDataSet(datasetKey), column_names, 0);
 
-    start_date = d3.min(getDataSet(), d => d[time_index]);
-    end_date = d3.max(getDataSet(), d => d[time_index]);
+    start_date = d3.min(getDataSet(datasetKey), d => d[time_index]);
+    end_date = d3.max(getDataSet(datasetKey), d => d[time_index]);
 
     let t = d3.scaleTime()
         .domain([start_date, end_date])
@@ -286,21 +293,20 @@ function createBarChartRace(data, top_n, tickDuration, htmlEl="chartDiv") {
     // loop
     let i = 0;
     let interval = d3.interval((e) => {
-        if (i >= getDataSet().length) {
-            i = getDataSet().length - 1
+        // console.log('i :>> ', datasetKey, i, getDataSet(datasetKey), getDataSet(datasetKey)[i]);
+        if (i >= getDataSet(datasetKey).length) {
+            i = getDataSet(datasetKey).length - 1
         }
-        [time, row_data] = getRowData(getDataSet(), column_names, i);
+        [time, row_data] = getRowData(getDataSet(datasetKey), column_names, i);
         drawGraph(row_data);
         // increment loop
-        // console.log('i :>> ', i, getDataSet().length);
-        if (i >= getDataSet().length) {
-            i = getDataSet().length - 1
+        if (i >= getDataSet(datasetKey).length) {
+            i = getDataSet(datasetKey).length - 1
         }else{
             i+=1
         }
 
-        // if (i == getDataSet().length) interval.stop()
-
+        // if (i == getDataSet(datasetKey).length) interval.stop()
 
     }, tickDuration)
     return JSON.parse(JSON.stringify(interval))
