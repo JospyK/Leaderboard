@@ -31,16 +31,6 @@
                 <span class="help-block">{{ trans('cruds.candidat.fields.nom_helper') }}</span>
             </div>
             <div class="form-group">
-                <label for="prenom">{{ trans('cruds.candidat.fields.prenom') }}</label>
-                <input class="form-control {{ $errors->has('prenom') ? 'is-invalid' : '' }}" type="text" name="prenom" id="prenom" value="{{ old('prenom', $candidat->prenom) }}">
-                @if($errors->has('prenom'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('prenom') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.candidat.fields.prenom_helper') }}</span>
-            </div>
-            <div class="form-group">
                 <label for="photo">{{ trans('cruds.candidat.fields.photo') }}</label>
                 <input class="form-control {{ $errors->has('photo') ? 'is-invalid' : '' }}" type="text" name="photo" id="photo" value="{{ old('photo', $candidat->photo) }}">
                 @if($errors->has('photo'))

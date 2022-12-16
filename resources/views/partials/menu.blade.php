@@ -8,11 +8,11 @@
 
     <ul class="c-sidebar-nav">
         <li class="c-sidebar-nav-item">
-            <a href="{{ route("admin.home") }}" class="c-sidebar-nav-link">
+            <a href="/leaderboard" class="c-sidebar-nav-link">
                 <i class="c-sidebar-nav-icon fas fa-fw fa-tachometer-alt">
 
                 </i>
-                {{ trans('global.dashboard') }}
+                Acceuil
             </a>
         </li>
         @can('user_management_access')
