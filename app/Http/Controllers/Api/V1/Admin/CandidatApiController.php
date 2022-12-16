@@ -21,12 +21,14 @@ class CandidatApiController extends Controller
             return $q->where('categorie', intval($request->categorie));
         });
 
-        $vpro  = $candidats->pluck('vpro', 'nom');
-        $vjury  = $candidats->pluck('vjury', 'nom');
-        $vpublic  = $candidats->pluck('vpublic', 'nom');
-        $total  = $candidats->pluck('total', 'nom');
+        $data = [
+            'vpro' => $candidats->pluck('vpro', 'nom'),
+            'vjury' => $candidats->pluck('vjury', 'nom'),
+            'vpublic' => $candidats->pluck('vpublic', 'nom'),
+            'total' => $candidats->pluck('total', 'nom'),
+        ];
 
-        return response()->json([$vpro, $vjury, $vpublic, $total], 200);
+        return response()->json($data, 200);
     }
 
     public function index()
