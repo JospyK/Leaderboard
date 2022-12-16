@@ -41,7 +41,7 @@
                                     </select>
                                 </p>
                             </h1>
-
+<!-- ((realtime_data)) -->
 
                             <div id="chart-card" class="card">
                                 <div class="card-body position-relative">
@@ -54,7 +54,7 @@
                                     <!-- <p style="position:absolute;top:50%;left:50%;font-size:1.125rem;transform: translate(-50%,-50%)"
                                         v-if="interval == null">Please upload data first</p> -->
                                     <p style="position:absolute;top:50%;left:50%;font-size:1.125rem;transform: translate(-50%,-50%)"
-                                        v-if="isLoadingDataSets">Chargement en cours ...</p>
+                                        v-if="isLoadingDataSets && !realtime_data">Chargement en cours ...</p>
                                 </div>
                             </div>
                         </div>
@@ -96,7 +96,7 @@
             data: {
                 errors: [],
                 file: null,
-                isLoadingDataSets: false,
+                isLoadingDataSets: true,
                 csv_data: null,
                 interval: null,
                 duration: 20,
@@ -111,9 +111,9 @@
                 }
             },
             mounted() {
-                setTimeout(() => {
+                // setTimeout(() => {
                     this.startRace({ preventDefault: () => { } })
-                }, 2000);
+                // }, 2000);
             },
             watch: {
                 realtime_data: {
@@ -131,12 +131,15 @@
                 "form.categorie": {
                     handler(val, old) {
                         console.log('val :>> ', val);
-                        this.fetchDataSet()
+                        this.realtime_data = null
+                        this.interval = null
+                        this.startRace()
                     }
                 }
             },
             methods: {
                 fetchDataSet: function () {
+                    this.isLoadingDataSets = true;
                     clearTimeout(this.daemonTimer)
                     const getRandomInt = (min, max) => {
                         min = Math.ceil(min);
@@ -177,9 +180,10 @@
 
                                 //   update existing datasets
                                 this.realtime_data = [...(this.realtime_data||[]), (newSet)]
-
                                 if (this.interval === null) { this.startRace() }
+                                this.isLoadingDataSets = false;
                             }).catch(err => {
+                                this.isLoadingDataSets = false;
                                 // console.log('err :>> ', err);
                             })
                         this.daemonTimer = setTimeout(() => {
@@ -197,15 +201,17 @@
                     }
                 },
                 startRace: function (e) {
+                    console.log('enter');
                     var self = this;
                     if (self.interval !== null) {
                         self.interval.stop()
                     }
                     if (!this.realtime_data || this.realtime_data.length === 0) {
                         this.fetchDataSet()
-                        // this.startRace()
+                      
                         return
                     }
+                    console.log('dont');
                     if (self.tickDuration && self.top_n) {
                         // e.preventDefault();
                         this.top_n = parseInt(self.top_n);

@@ -1,6 +1,6 @@
 var dataSet = []
 function updatedDataSet(newData){
-     dataSet = newData
+     dataSet = newData || []
 }
 function getDataSet(){
      return dataSet
@@ -154,12 +154,12 @@ function createBarChartRace(data, top_n, tickDuration) {
         .attr('height', 2)
         .attr('width', 0);
 
-    let timeText = svg.append('text')
-        .attr('class', 'timeText')
-        .attr('x', width - margin.right)
-        .attr('y', height - margin.bottom - 5)
-        .style('text-anchor', 'end')
-        .html(d3.timeFormat("%B %d, %Y")(time));
+    // let timeText = svg.append('text')
+    //     .attr('class', 'timeText')
+    //     .attr('x', width - margin.right)
+    //     .attr('y', height - margin.bottom - 5)
+    //     .style('text-anchor', 'end')
+    //     .html(d3.timeFormat("%B %d, %Y")(time));
 
     // draw the updated graph with transitions
     function drawGraph() {
