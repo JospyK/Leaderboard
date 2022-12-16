@@ -6,10 +6,10 @@ function getDataSet() {
     return dataSet
 }
 
-function createBarChartRace(data, top_n, tickDuration) {
+function createBarChartRace(data, top_n, tickDuration, htmlEl="chartDiv") {
     var data = data;
     updatedDataSet(data)
-    let chartDiv = document.getElementById("chartDiv");
+    let chartDiv = document.getElementById(htmlEl);
     chartDiv.textContent = '';
     let width = chartDiv.clientWidth;
     let height = chartDiv.clientHeight - 50;

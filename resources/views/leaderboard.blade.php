@@ -14,11 +14,11 @@
     <link rel="icon" href="/favicon.png">
 </head>
 
-<body>
+<body >
     <div class="container-fluid">
-        <div class="row">
+        <div class="row" id="app">
             <div class="col-md-9">
-                <main class="main-content" id="app">
+                <main class="main-content" >
                     <section class="section">
                         <div class="container">
                             <h1 id="main-title" class="">
@@ -59,12 +59,19 @@
             <div class="col-md-3">
 
 
-                <div id="chart-card" class="card">
+                <div  class="card chart-card mini" v-for="(chart, index) in secondaryCharts"
+                    :key="index">
+                    <div class="card-body position-relative">
+                        <h5 class="card-title" id="graph-title">((chart.title))</h5>
+                        <div v-bind:id="chart.id" style="width:100%; height: 650px"></div>
+                        <p style="position:absolute;top:50%;left:50%;font-size:1.125rem;transform: translate(-50%,-50%)"
+                            v-if="isLoadingDataSets && !realtime_data">Chargement en cours ...</p>
+                    </div>
+                </div>
+                <!-- <div id="chart-card" class="card">
                     <div class="card-body position-relative">
                         <h5 class="card-title" id="graph-title">((title))</h5>
-                        <div id="chartDiv" style="width:100%; height: 650px"></div>
-                        <!-- <p style="position:absolute;top:50%;left:50%;font-size:1.125rem;transform: translate(-50%,-50%)"
-                            v-if="interval == null">Please upload data first</p> -->
+                        <div id="vjuryChart" style="width:100%; height: 650px"></div>
                         <p style="position:absolute;top:50%;left:50%;font-size:1.125rem;transform: translate(-50%,-50%)"
                             v-if="isLoadingDataSets && !realtime_data">Chargement en cours ...</p>
                     </div>
@@ -72,23 +79,11 @@
                 <div id="chart-card" class="card">
                     <div class="card-body position-relative">
                         <h5 class="card-title" id="graph-title">((title))</h5>
-                        <div id="chartDiv" style="width:100%; height: 650px"></div>
-                        <!-- <p style="position:absolute;top:50%;left:50%;font-size:1.125rem;transform: translate(-50%,-50%)"
-                            v-if="interval == null">Please upload data first</p> -->
+                        <div id="vpublicChart" style="width:100%; height: 650px"></div>
                         <p style="position:absolute;top:50%;left:50%;font-size:1.125rem;transform: translate(-50%,-50%)"
                             v-if="isLoadingDataSets && !realtime_data">Chargement en cours ...</p>
                     </div>
-                </div>
-                <div id="chart-card" class="card">
-                    <div class="card-body position-relative">
-                        <h5 class="card-title" id="graph-title">((title))</h5>
-                        <div id="chartDiv" style="width:100%; height: 650px"></div>
-                        <!-- <p style="position:absolute;top:50%;left:50%;font-size:1.125rem;transform: translate(-50%,-50%)"
-                            v-if="interval == null">Please upload data first</p> -->
-                        <p style="position:absolute;top:50%;left:50%;font-size:1.125rem;transform: translate(-50%,-50%)"
-                            v-if="isLoadingDataSets && !realtime_data">Chargement en cours ...</p>
-                    </div>
-                </div>
+                </div> -->
 
 
             </div>
@@ -133,7 +128,21 @@
                 previousJsonResponse: {},
                 max_duplicate_set: 3,
                 duplicate_set_count: 0,
-                selectedCategorie: ''
+                selectedCategorie: '',
+                secondaryCharts: [
+                    {
+                        id: "vproChart",
+                        title: "vpro"
+                    },
+                    {
+                        id: "vjuryChart",
+                        title: "vjuryChart"
+                    },
+                    {
+                        id: "vpublicChart",
+                        title: "vpublicChart"
+                    },
+                ]
 
             },
             mounted() {
@@ -244,6 +253,9 @@
                         let chartDiv = document.getElementById("chartDiv");
                         var data = JSON.parse(JSON.stringify(self.realtime_data))
                         self.interval = createBarChartRace(data, self.top_n, self.tickDuration);
+                        self.interval = createBarChartRace(data, self.top_n, self.tickDuration, 'vproChart');
+                        self.interval = createBarChartRace(data, self.top_n, self.tickDuration, 'vjuryChart');
+                        self.interval = createBarChartRace(data, self.top_n, self.tickDuration, 'vpublicChart');
                     }
 
                     //   self.errors = [];
@@ -262,7 +274,7 @@
                 },
                 onCategorieChange: function () {
                     window.location.href = window.location.origin + window.location.pathname + '?categorie=' + this.selectedCategorie
-                }
+                },
             },
             delimiters: ["((", "))"]
 
