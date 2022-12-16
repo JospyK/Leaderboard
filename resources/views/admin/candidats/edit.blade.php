@@ -10,7 +10,7 @@
         <form method="POST" action="{{ route("admin.candidats.update", [$candidat->id]) }}" enctype="multipart/form-data">
             @method('PUT')
             @csrf
-            <div class="form-group">
+            {{-- <div class="form-group">
                 <label for="order">{{ trans('cruds.candidat.fields.order') }}</label>
                 <input class="form-control {{ $errors->has('order') ? 'is-invalid' : '' }}" type="number" name="order" id="order" value="{{ old('order', $candidat->order) }}" step="1">
                 @if($errors->has('order'))
@@ -19,7 +19,7 @@
                     </div>
                 @endif
                 <span class="help-block">{{ trans('cruds.candidat.fields.order_helper') }}</span>
-            </div>
+            </div> --}}
             <div class="form-group">
                 <label for="nom">{{ trans('cruds.candidat.fields.nom') }}</label>
                 <input class="form-control {{ $errors->has('nom') ? 'is-invalid' : '' }}" type="text" name="nom" id="nom" value="{{ old('nom', $candidat->nom) }}">
@@ -29,16 +29,6 @@
                     </div>
                 @endif
                 <span class="help-block">{{ trans('cruds.candidat.fields.nom_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <label for="prenom">{{ trans('cruds.candidat.fields.prenom') }}</label>
-                <input class="form-control {{ $errors->has('prenom') ? 'is-invalid' : '' }}" type="text" name="prenom" id="prenom" value="{{ old('prenom', $candidat->prenom) }}">
-                @if($errors->has('prenom'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('prenom') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.candidat.fields.prenom_helper') }}</span>
             </div>
             {{--
             <div class="form-group">
@@ -66,7 +56,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.candidat.fields.categorie_helper') }}</span>
             </div>
-            <div class="form-group">
+            {{-- <div class="form-group">
                 <label for="classement">{{ trans('cruds.candidat.fields.classement') }}</label>
                 <input class="form-control {{ $errors->has('classement') ? 'is-invalid' : '' }}" type="number" name="classement" id="classement" value="{{ old('classement', $candidat->classement) }}" step="1">
                 @if($errors->has('classement'))
@@ -75,7 +65,7 @@
                     </div>
                 @endif
                 <span class="help-block">{{ trans('cruds.candidat.fields.classement_helper') }}</span>
-            </div>
+            </div> --}}
             <div class="form-group">
                 <button class="btn btn-danger" type="submit">
                     {{ trans('global.save') }}
