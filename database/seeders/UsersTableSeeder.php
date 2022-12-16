@@ -23,8 +23,7 @@ class UsersTableSeeder extends Seeder
 
         User::insert($users);
 
-        Candidat::factory(40)->create();
-
+        Candidat::factory(50)->create();
 
     }
 }

@@ -10,15 +10,14 @@ class CreateCandidatsTable extends Migration
     {
         Schema::create('candidats', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('order')->nullable();
             $table->string('nom')->nullable();
-            $table->string('photo')->nullable();
+            $table->string('projet')->nullable();
             $table->string('categorie')->nullable();
-            $table->integer('vpro')->nullable();
-            $table->integer('vjury')->nullable();
-            $table->integer('vpublic')->nullable();
-            $table->integer('total')->nullable();
-            $table->integer('classement')->nullable();
+            $table->integer('vpro')->nullable()->default(0);
+            $table->integer('vjury')->nullable()->default(0);
+            $table->integer('vpublic')->nullable()->default(0);
+            $table->integer('total')->nullable()->default(0);
+            $table->integer('classement')->nullable()->default(0);
             $table->timestamps();
             $table->softDeletes();
         });

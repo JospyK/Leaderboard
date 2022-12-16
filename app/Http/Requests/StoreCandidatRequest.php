@@ -27,7 +27,7 @@ class StoreCandidatRequest extends FormRequest
                 'string',
                 'nullable',
             ],
-            'photo' => [
+            'projet' => [
                 'string',
                 'nullable',
             ],

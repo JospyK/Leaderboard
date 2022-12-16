@@ -32,7 +32,7 @@
                             {{ trans('cruds.candidat.fields.nom') }}
                         </th>
                         <th>
-                            {{ trans('cruds.candidat.fields.photo') }}
+                            {{ trans('cruds.candidat.fields.projet') }}
                         </th>
                         <th>
                             {{ trans('cruds.candidat.fields.categorie') }}
@@ -73,7 +73,7 @@
                                 {{ $candidat->nom ?? '' }}
                             </td>
                             <td>
-                                {{ $candidat->photo ?? '' }}
+                                {{ $candidat->projet ?? '' }}
                             </td>
                             <td>
                                 {{ App\Models\Candidat::CATEGORIE_RADIO[$candidat->categorie] ?? '' }}

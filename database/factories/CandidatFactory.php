@@ -18,13 +18,12 @@ class CandidatFactory extends Factory
     {
         return [
             'nom' => $this->faker->name(),
-            'photo' => $this->faker->name(),
+            'projet' => $this->faker->name(),
             'categorie' => rand(1, 10),
-            'vpro' => rand(1, 10),
-            'vjury' => rand(1, 10),
-            'vpublic' => rand(1, 10),
-            'total' => rand(1, 10),
-            'classement' => rand(1, 10),
+            'vpro' => 0,
+            'vjury' => 0,
+            'vpublic' => 0,
+            'total' => 0,
         ];
     }
 }

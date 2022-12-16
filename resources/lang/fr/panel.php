@@ -1,5 +1,5 @@
 <?php
 
 return [
-    'site_title' => 'Leaderboard',
+    'site_title' => 'DSI Awards 2022',
 ];

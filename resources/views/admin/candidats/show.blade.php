@@ -41,10 +41,10 @@
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.candidat.fields.photo') }}
+                            {{ trans('cruds.candidat.fields.projet') }}
                         </th>
                         <td>
-                            {{ $candidat->photo }}
+                            {{ $candidat->projet }}
                         </td>
                     </tr>
                     <tr>

@@ -57,11 +57,40 @@
                 </main>
             </div>
             <div class="col-md-3">
-                <h2 class="">
-                    Nos Partenaires
-                </h2>
-                <hr>
-                <img src="" alt="">
+
+
+                <div id="chart-card" class="card">
+                    <div class="card-body position-relative">
+                        <h5 class="card-title" id="graph-title">((title))</h5>
+                        <div id="chartDiv" style="width:100%; height: 650px"></div>
+                        <!-- <p style="position:absolute;top:50%;left:50%;font-size:1.125rem;transform: translate(-50%,-50%)"
+                            v-if="interval == null">Please upload data first</p> -->
+                        <p style="position:absolute;top:50%;left:50%;font-size:1.125rem;transform: translate(-50%,-50%)"
+                            v-if="isLoadingDataSets && !realtime_data">Chargement en cours ...</p>
+                    </div>
+                </div>
+                <div id="chart-card" class="card">
+                    <div class="card-body position-relative">
+                        <h5 class="card-title" id="graph-title">((title))</h5>
+                        <div id="chartDiv" style="width:100%; height: 650px"></div>
+                        <!-- <p style="position:absolute;top:50%;left:50%;font-size:1.125rem;transform: translate(-50%,-50%)"
+                            v-if="interval == null">Please upload data first</p> -->
+                        <p style="position:absolute;top:50%;left:50%;font-size:1.125rem;transform: translate(-50%,-50%)"
+                            v-if="isLoadingDataSets && !realtime_data">Chargement en cours ...</p>
+                    </div>
+                </div>
+                <div id="chart-card" class="card">
+                    <div class="card-body position-relative">
+                        <h5 class="card-title" id="graph-title">((title))</h5>
+                        <div id="chartDiv" style="width:100%; height: 650px"></div>
+                        <!-- <p style="position:absolute;top:50%;left:50%;font-size:1.125rem;transform: translate(-50%,-50%)"
+                            v-if="interval == null">Please upload data first</p> -->
+                        <p style="position:absolute;top:50%;left:50%;font-size:1.125rem;transform: translate(-50%,-50%)"
+                            v-if="isLoadingDataSets && !realtime_data">Chargement en cours ...</p>
+                    </div>
+                </div>
+
+
             </div>
         </div>
     </div>

@@ -36,7 +36,7 @@ class Candidat extends Model
     protected $fillable = [
         'order',
         'nom',
-        'photo',
+        'projet',
         'categorie',
         'vpro',
         'vjury',

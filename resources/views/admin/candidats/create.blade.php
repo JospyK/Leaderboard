@@ -30,24 +30,14 @@
                 <span class="help-block">{{ trans('cruds.candidat.fields.nom_helper') }}</span>
             </div>
             <div class="form-group">
-                <label for="prenom">{{ trans('cruds.candidat.fields.prenom') }}</label>
-                <input class="form-control {{ $errors->has('prenom') ? 'is-invalid' : '' }}" type="text" name="prenom" id="prenom" value="{{ old('prenom', '') }}">
-                @if($errors->has('prenom'))
+                <label for="projet">{{ trans('cruds.candidat.fields.projet') }}</label>
+                <input class="form-control {{ $errors->has('projet') ? 'is-invalid' : '' }}" type="text" name="projet" id="projet" value="{{ old('projet', '') }}">
+                @if($errors->has('projet'))
                     <div class="invalid-feedback">
-                        {{ $errors->first('prenom') }}
+                        {{ $errors->first('projet') }}
                     </div>
                 @endif
-                <span class="help-block">{{ trans('cruds.candidat.fields.prenom_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <label for="photo">{{ trans('cruds.candidat.fields.photo') }}</label>
-                <input class="form-control {{ $errors->has('photo') ? 'is-invalid' : '' }}" type="text" name="photo" id="photo" value="{{ old('photo', '') }}">
-                @if($errors->has('photo'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('photo') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.candidat.fields.photo_helper') }}</span>
+                <span class="help-block">{{ trans('cruds.candidat.fields.projet_helper') }}</span>
             </div>
             <div class="form-group">
                 <label>{{ trans('cruds.candidat.fields.categorie') }}</label>
