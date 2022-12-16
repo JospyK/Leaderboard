@@ -36,6 +36,15 @@ class CandidatController extends Controller
         return redirect()->route('admin.candidats.index');
     }
 
+    public function vote(Request $request)
+    {
+        abort_if(Gate::denies('candidat_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $categorie = Candidat::all()->sortBy('categorie')->groupBy('categorie');
+
+        return view('admin.candidats.categories', compact('categorie'));
+    }
+
     public function edit(Candidat $candidat)
     {
         abort_if(Gate::denies('candidat_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -46,8 +55,10 @@ class CandidatController extends Controller
     public function update(UpdateCandidatRequest $request, Candidat $candidat)
     {
         $candidat->update($request->all());
+        $candidat->total= $candidat->vpro + $candidat->vjury + $candidat->vpublic;
+        $candidat->save();
 
-        return redirect()->route('admin.candidats.index');
+        return redirect()->route('admin.candidats.vote');
     }
 
     public function show(Candidat $candidat)
