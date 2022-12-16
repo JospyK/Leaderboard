@@ -54,9 +54,31 @@ class CandidatController extends Controller
 
     public function update(UpdateCandidatRequest $request, Candidat $candidat)
     {
-        $candidat->update($request->all());
-        $candidat->total= $candidat->vpro + $candidat->vjury + $candidat->vpublic;
-        $candidat->save();
+
+        $message = [];
+        $check_vjury = Candidat::where('categorie', $candidat->categorie)->where('vjury', $request->vjury)->first();
+        $check_vpro = Candidat::where('categorie', $candidat->categorie)->where('vpro', $request->vpro)->first();
+        $check_vpublic = Candidat::where('categorie', $candidat->categorie)->where('vpublic', $request->vpublic)->first();
+
+        if($check_vjury) {
+            array_push($message, "Le candidat: " .$check_vjury->nom. " occupe deja la position (vjury): ". $request->vjury);
+        }
+        if($check_vpro) {
+            array_push($message, "Le candidat: " .$check_vpro->nom. " occupe deja la position (vpro): ". $request->vpro);
+        }
+        if($check_vpublic) {
+            array_push($message, "Le candidat: " .$check_vpublic->nom. " occupe deja la position (vpublic): ". $request->vpublic);
+        }
+
+        if (!$message) {
+            $candidat->update($request->all());
+            $candidat->total= $candidat->vpro + $candidat->vjury + $candidat->vpublic;
+            $candidat->save();
+        }
+        else {
+            return back()->withErrors($message);
+        }
+
 
         return redirect()->route('admin.candidats.vote');
     }
