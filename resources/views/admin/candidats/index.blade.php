@@ -32,9 +32,6 @@
                             {{ trans('cruds.candidat.fields.nom') }}
                         </th>
                         <th>
-                            {{ trans('cruds.candidat.fields.prenom') }}
-                        </th>
-                        <th>
                             {{ trans('cruds.candidat.fields.photo') }}
                         </th>
                         <th>
@@ -74,9 +71,6 @@
                             </td>
                             <td>
                                 {{ $candidat->nom ?? '' }}
-                            </td>
-                            <td>
-                                {{ $candidat->prenom ?? '' }}
                             </td>
                             <td>
                                 {{ $candidat->photo ?? '' }}
@@ -178,7 +172,7 @@
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();
   });
-  
+
 })
 
 </script>

@@ -27,10 +27,6 @@ class UpdateCandidatRequest extends FormRequest
                 'string',
                 'nullable',
             ],
-            'prenom' => [
-                'string',
-                'nullable',
-            ],
             'photo' => [
                 'string',
                 'nullable',

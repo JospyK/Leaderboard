@@ -8,15 +8,15 @@
 
     <ul class="c-sidebar-nav">
         <li class="c-sidebar-nav-item">
-            <a href="{{ route("admin.home") }}" class="c-sidebar-nav-link">
+            <a href="/leaderboard" class="c-sidebar-nav-link">
                 <i class="c-sidebar-nav-icon fas fa-fw fa-tachometer-alt">
 
                 </i>
-                {{ trans('global.dashboard') }}
+                Acceuil
             </a>
         </li>
         @can('user_management_access')
-            <li class="c-sidebar-nav-dropdown {{ request()->is("admin/permissions*") ? "c-show" : "" }} {{ request()->is("admin/roles*") ? "c-show" : "" }} {{ request()->is("admin/users*") ? "c-show" : "" }}">
+            {{-- <li class="c-sidebar-nav-dropdown {{ request()->is("admin/permissions*") ? "c-show" : "" }} {{ request()->is("admin/roles*") ? "c-show" : "" }} {{ request()->is("admin/users*") ? "c-show" : "" }}">
                 <a class="c-sidebar-nav-dropdown-toggle" href="#">
                     <i class="fa-fw fas fa-users c-sidebar-nav-icon">
 
@@ -55,7 +55,7 @@
                         </li>
                     @endcan
                 </ul>
-            </li>
+            </li> --}}
         @endcan
         @can('candidat_access')
             <li class="c-sidebar-nav-item">
@@ -67,6 +67,16 @@
                 </a>
             </li>
         @endcan
+        @can('candidat_access')
+        <li class="c-sidebar-nav-item">
+            <a href="{{ route("admin.candidats.vote") }}" class="c-sidebar-nav-link {{ request()->is("admin/candidats") || request()->is("admin/candidats/*") ? "c-active" : "" }}">
+                <i class="fa-fw fas fa-cogs c-sidebar-nav-icon">
+
+                </i>
+                Votes
+            </a>
+        </li>
+    @endcan
         @if(file_exists(app_path('Http/Controllers/Auth/ChangePasswordController.php')))
             @can('profile_password_edit')
                 <li class="c-sidebar-nav-item">

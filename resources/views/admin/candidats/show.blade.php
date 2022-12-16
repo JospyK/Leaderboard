@@ -41,14 +41,6 @@
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.candidat.fields.prenom') }}
-                        </th>
-                        <td>
-                            {{ $candidat->prenom }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
                             {{ trans('cruds.candidat.fields.photo') }}
                         </th>
                         <td>
