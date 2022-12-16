@@ -13,16 +13,12 @@
     <link rel="stylesheet" href="{{asset('css/bar-chart-race/style.css')}}">
     <link rel="icon" href="/favicon.png">
 </head>
-<style>
-    .chart-card .chart{
-        height: 30vh;
-    }
-</style>
-<body>
+
+<body >
     <div class="container-fluid">
         <div class="row" id="app">
             <div class="col-md-9">
-                <main class="main-content">
+                <main class="main-content" >
                     <section class="section">
                         <div class="container">
                             <h1 id="main-title" class="">
@@ -48,7 +44,7 @@
                             <div id="chart-card" class="card">
                                 <div class="card-body position-relative">
                                     <h5 class="card-title" id="graph-title">((title))</h5>
-                                    <div id="totalChart" style="width:100%; height: 650px"></div>
+                                    <div id="chartDiv" style="width:100%; height: 650px"></div>
                                     <!-- <p style="position:absolute;top:50%;left:50%;font-size:1.125rem;transform: translate(-50%,-50%)"
                                         v-if="interval == null">Please upload data first</p> -->
                                     <p style="position:absolute;top:50%;left:50%;font-size:1.125rem;transform: translate(-50%,-50%)"
@@ -63,12 +59,13 @@
             <div class="col-md-3">
 
 
-                <div class="card chart-card mini" v-for="(chart, index) in secondaryCharts" :key="index">
+                <div  class="card chart-card mini" v-for="(chart, index) in secondaryCharts"
+                    :key="index">
                     <div class="card-body position-relative">
                         <h5 class="card-title" id="graph-title">((chart.title))</h5>
-                        <div v-bind:id="chart.id+'Chart'" class="chart"></div>
+                        <div v-bind:id="chart.id" style="width:100%; height: 650px"></div>
                         <p style="position:absolute;top:50%;left:50%;font-size:1.125rem;transform: translate(-50%,-50%)"
-                            v-if="isLoadingDataSets">Chargement en cours ...</p>
+                            v-if="isLoadingDataSets && !realtime_data">Chargement en cours ...</p>
                     </div>
                 </div>
                 <!-- <div id="chart-card" class="card">
@@ -120,41 +117,29 @@
                 isLoadingDataSets: true,
                 csv_data: null,
                 interval: null,
-                intervalList: {
-                    total: null,
-                    vpro: null,
-                    vjury: null,
-                    vpublic: null,
-                },
                 duration: 1,
-                tickDuration: 1000,
+                tickDuration: 1,
                 fetchdaemon_interval: 3000,
                 top_n: 10,
                 title: "Candidats",
                 fileplaceholder: "Choose file",
                 realtime_data: null,
-                datasets: {
-                    total: null,
-                    vpro: null,
-                    vjury: null,
-                    vpublic: null,
-                },
                 daemonTimer: null,
                 previousJsonResponse: {},
                 max_duplicate_set: 3,
-                duplicate_set_count: {},
+                duplicate_set_count: 0,
                 selectedCategorie: '',
                 secondaryCharts: [
                     {
-                        id: "vpro",
+                        id: "vproChart",
                         title: "vpro"
                     },
                     {
-                        id: "vjury",
+                        id: "vjuryChart",
                         title: "vjuryChart"
                     },
                     {
-                        id: "vpublic",
+                        id: "vpublicChart",
                         title: "vpublicChart"
                     },
                 ]
@@ -168,6 +153,12 @@
                 // }, 2000);
             },
             watch: {
+                realtime_data: {
+                    deep: true,
+                    handler(val, old) {
+                        updatedDataSet(val)
+                    }
+                },
 
             },
             methods: {
@@ -195,56 +186,33 @@
                         fetch(raceEndpoint, options)
                             .then((response) => response.json())
                             .then((jsonResponse) => {
-                                const { total, vpro, vjury } = jsonResponse
-                            
+                                const isSameAsPreviousSet = _.isEqual(this.previousJsonResponse, jsonResponse)
+                                this.duplicate_set_count = isSameAsPreviousSet ? this.duplicate_set_count + 1 : 0
+                                if (this.duplicate_set_count > this.max_duplicate_set) {
+                                    this.isLoadingDataSets = false;
+                                    return
+                                }
+                                this.previousJsonResponse = jsonResponse
+                                // console.log(isSameAsPreviousSet, this.max_duplicate_set, this.duplicate_set_count);
 
-                                Object.keys(jsonResponse).forEach(key => {
+                                //normalize response
+                                const setSample = {
+                                    date: getRandomInt(2000, 2010) + "-" + getRandomInt(1, 12) + "-" + getRandomInt(1, 28),
+                                    user1: getRandomInt(10, 1000),
+                                    user2: getRandomInt(1, getRandomInt(100, 1000)),
+                                    user3: getRandomInt(1, 100),
+                                    user4: getRandomInt(3, getRandomInt(10, 100)),
+                                    user5: getRandomInt(50, getRandomInt(100, 1000)),
+                                }
+                                const newSet = {
+                                    date: getRandomInt(2000, 2010) + "-" + getRandomInt(1, 12) + "-" + getRandomInt(1, 28),
+                                    ...jsonResponse
+                                }
 
-                                    const isSameAsPreviousSet = _.isEqual((this.previousJsonResponse[key] || {}), jsonResponse[key])
+                                //   update existing datasets
+                                this.realtime_data = [...(this.realtime_data || []), (newSet)]
 
-                                    // console.log('isSameAsPreviousSet :>> ', isSameAsPreviousSet);
-                                    this.duplicate_set_count[key] = isSameAsPreviousSet ? (this.duplicate_set_count[key] || 0) + 1 : 0
-                                    if (this.duplicate_set_count[key] <= this.max_duplicate_set) {
-                                        jsonResponse[key] = {
-                                            date: getRandomInt(2000, 2010) + "-" + getRandomInt(1, 12) + "-" + getRandomInt(1, 28),
-                                            // user1: getRandomInt(10, 1000),
-                                            // user2: getRandomInt(1, getRandomInt(100, 1000)),
-                                            // user3: getRandomInt(1, 100),
-                                            // user4: getRandomInt(3, getRandomInt(10, 100)),
-                                            // user5: getRandomInt(50, getRandomInt(100, 1000)),
-                                            ...jsonResponse[key]
-                                        }
-                                        this.previousJsonResponse[key] = jsonResponse[key]
-                                        this.datasets[key] = [...(this.datasets[key] || []), (jsonResponse[key])]
-                                        updatedDataSet(this.datasets[key], key)
-
-                                    }
-
-                                    if (this.intervalList[key] === null) { this.startRace() }
-
-                                });
-
-
-                                this.isLoadingDataSets = false;
-                                // console.log(jsonResponse);
-
-                                // //normalize response
-                                // const setSample = {
-                                //     date: getRandomInt(2000, 2010) + "-" + getRandomInt(1, 12) + "-" + getRandomInt(1, 28),
-                                //     user1: getRandomInt(10, 1000),
-                                //     user2: getRandomInt(1, getRandomInt(100, 1000)),
-                                //     user3: getRandomInt(1, 100),
-                                //     user4: getRandomInt(3, getRandomInt(10, 100)),
-                                //     user5: getRandomInt(50, getRandomInt(100, 1000)),
-                                // }
-                                // const newSet = {
-                                //     date: getRandomInt(2000, 2010) + "-" + getRandomInt(1, 12) + "-" + getRandomInt(1, 28),
-                                //     ...total
-                                // }
-
-                                // //   update existing datasets
-                                // this.realtime_data = [...(this.realtime_data || []), (newSet)]
-
+                                if (this.interval === null) { this.startRace() }
 
 
                             }).catch(err => {
@@ -272,28 +240,22 @@
                     if (self.interval !== null) {
                         self.interval.stop()
                     }
-                    if (Object.keys(this.datasets).some(e => this.datasets[e] === null)) {
+                    if (!this.realtime_data || this.realtime_data.length === 0) {
                         this.fetchDataSet()
+
                         return
                     }
                     if (self.tickDuration && self.top_n) {
                         // e.preventDefault();
                         this.top_n = parseInt(self.top_n);
                         this.duration = parseInt(self.duration);
-                        // this.tickDuration = self.duration / self.realtime_data.length * 1000
-                        // let chartDiv = document.getElementById("chartDiv");
-                        // var data = JSON.parse(JSON.stringify(self.realtime_data))
-                        // self.interval = createBarChartRace(data, self.top_n, self.tickDuration, {});
-
-                        ['vpro', 'vjury', 'vpublic', 'total'].forEach(item => {
-                            const opts = {
-                                htmlEl: item + 'Chart',
-                                datasetKey: item,
-                            }
-                            self.intervalList[item] = createBarChartRace(this.datasets[item], self.top_n, self.tickDuration, opts);
-                        });
-                        // self.intervalList['vjury'] = createBarChartRace(data, self.top_n, self.tickDuration, 'vjuryChart');
-                        // self.intervalList['vpublic'] = createBarChartRace(data, self.top_n, self.tickDuration, 'vpublicChart');
+                        this.tickDuration = self.duration / self.realtime_data.length * 1000
+                        let chartDiv = document.getElementById("chartDiv");
+                        var data = JSON.parse(JSON.stringify(self.realtime_data))
+                        self.interval = createBarChartRace(data, self.top_n, self.tickDuration);
+                        self.interval = createBarChartRace(data, self.top_n, self.tickDuration, 'vproChart');
+                        self.interval = createBarChartRace(data, self.top_n, self.tickDuration, 'vjuryChart');
+                        self.interval = createBarChartRace(data, self.top_n, self.tickDuration, 'vpublicChart');
                     }
 
                     //   self.errors = [];
