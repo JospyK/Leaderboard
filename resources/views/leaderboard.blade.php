@@ -155,7 +155,7 @@
                                     return
                                 }
                                 this.previousJsonResponse = jsonResponse
-                                console.log(isSameAsPreviousSet, this.max_duplicate_set, this.duplicate_set_count);
+                                // console.log(isSameAsPreviousSet, this.max_duplicate_set, this.duplicate_set_count);
 
                                 //normalize response
                                 const setSample = {
