@@ -56,31 +56,42 @@ class CandidatController extends Controller
     {
 
         $message = [];
-        $check_vjury = Candidat::where('categorie', $candidat->categorie)->where('id', '<>', $candidat->id)->where('vjury', intval($request->vjury))->first();
-        $check_vpro = Candidat::where('categorie', $candidat->categorie)->where('id', '<>', $candidat->id)->where('vpro', intval($request->vpro))->first();
-        $check_vpublic = Candidat::where('categorie', $candidat->categorie)->where('id', '<>', $candidat->id)->where('vpublic', intval($request->vpublic))->first();
+        $check_vjury = null;
+        $check_vpro = null;
+        $check_vpublic = null;
 
-        if($check_vjury) {
-            array_push($message, "Le candidat: " .$check_vjury->nom. " occupe deja la position (vjury): ". $request->vjury);
-        }
-        if($check_vpro) {
-            array_push($message, "Le candidat: " .$check_vpro->nom. " occupe deja la position (vpro): ". $request->vpro);
-        }
-        if($check_vpublic) {
-            array_push($message, "Le candidat: " .$check_vpublic->nom. " occupe deja la position (vpublic): ". $request->vpublic);
+        if ($request->has('vjury')) {
+            $check_vjury = Candidat::where('categorie', $candidat->categorie)->where('id', '<>', $candidat->id)->where('vjury', intval($request->vjury))->first();
+            if($check_vjury) {
+                array_push($message, "Le candidat: " .$check_vjury->nom. " occupe deja la position (vjury): ". $request->vjury);
+            }
         }
 
-        // dd(Candidat::where('categorie', $candidat->categorie)->where('id', '<>', $candidat->id)->where('vpublic', $request->vpublic)->first(), $check_vjury, $check_vpro, $check_vpublic, $message, $request->all());
+
+        if ($request->has('vpro')) {
+            $check_vpro = Candidat::where('categorie', $candidat->categorie)->where('id', '<>', $candidat->id)->where('vpro', intval($request->vpro))->first();
+            if($check_vpro) {
+                array_push($message, "Le candidat: " .$check_vpro->nom. " occupe deja la position (vpro): ". $request->vpro);
+            }
+        }
+
+        if ($request->has('vpro')) {
+            $check_vpublic = Candidat::where('categorie', $candidat->categorie)->where('id', '<>', $candidat->id)->where('vpublic', intval($request->vpublic))->first();
+            if($check_vpublic) {
+                array_push($message, "Le candidat: " .$check_vpublic->nom. " occupe deja la position (vpublic): ". $request->vpublic);
+            }
+        }
+
+        // dd($check_vjury, $check_vpro, $check_vpublic, $message, $request->all());
 
         if (!$message) {
             $candidat->update($request->all());
-            $candidat->total= $candidat->vpro + $candidat->vjury + $candidat->vpublic;
+            $candidat->total = $candidat->vpro + $candidat->vjury + $candidat->vpublic;
             $candidat->save();
         }
         else {
             return back()->withErrors($message);
         }
-
 
         return redirect()->route('admin.candidats.vote');
     }
