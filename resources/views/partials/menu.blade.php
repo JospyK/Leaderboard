@@ -8,11 +8,11 @@
 
     <ul class="c-sidebar-nav">
         <li class="c-sidebar-nav-item">
-            <a href="/leaderboard" class="c-sidebar-nav-link">
+            <a href="/" class="c-sidebar-nav-link">
                 <i class="c-sidebar-nav-icon fas fa-fw fa-tachometer-alt">
 
                 </i>
-                Acceuil
+                Accueil
             </a>
         </li>
         @can('user_management_access')
@@ -73,7 +73,7 @@
                 <i class="fa-fw fas fa-cogs c-sidebar-nav-icon">
 
                 </i>
-                Votes
+                Classements
             </a>
         </li>
     @endcan
