@@ -24,7 +24,7 @@
             <div class="col-md-9">
                 <main class="main-content">
                     <section class="section">
-                        <div class="container">
+                        <div class="containerd">
                             <h1 id="main-title" class="">
                                 <p class="item">
                                     <select name="categorie" id="" v-model="selectedCategorie"
