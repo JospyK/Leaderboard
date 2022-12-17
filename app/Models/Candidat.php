@@ -16,12 +16,12 @@ class Candidat extends Model
         '1' => "DSI INNOVANT(E)",
         '2' => "DSI RESILIENT",
         '3' => "LEADERSHIP FEMININ ",
-        '4' => "ADMINISTRATION INTELLIGENTE",
-        '5' => "COUP DE CŒUR",
-        '6' => "ENTREPRISE DIGITALE",
-        '7' => "INDUSTRIE 4.0",
+        '4' => "CYBERSECURITE",
+        '5' => "GAMING",
+        '6' => "ADMINISTRATION INTELLIGENTE",
+        '7' => "DEVELOPPEUR DE PLATEFORME ET SOLUTIONS LOGICIELLES",
         '8' => "LEADER DU SERVICE IT",
-        '9' => "CHAMPION DE L’EDUCATION",
+        '9' => "MEILLEURE ECOLE DE FORMATION",
         '10' => "DEFENSEURS",
     ];
 

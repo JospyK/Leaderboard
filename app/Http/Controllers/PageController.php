@@ -9,10 +9,10 @@ class PageController extends Controller
 {
     public function classement(Request $request)
     {
-        $candidats = Candidat::where('categorie', $request->categorie)->orderBy('total')->orderBy('vpro')->get();
+        $winner = Candidat::where('categorie', $request->categorie)->orderBy('total', 'DESC')->orderBy('vpro', 'DESC')->orderBy('vpro', 'DESC')->first();
 
-        dd($candidats->first());
-        return view('admin.candidats.classement', compact('candidats'));
+        //dd($winner);
+        return view('admin.candidats.classement', compact('winner'));
     }
 
 }

@@ -3,7 +3,7 @@
 
 <head>
     <title>
-        Candidats
+        DSI Awards 2022
     </title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -25,35 +25,33 @@
                 <main class="main-content">
                     <section class="section">
                         <div class="container">
-                            <h1 id="main-title" class="">
+                            <h3 id="main-title" class="">
+                                <p class="text-primary">
+                                    <img src="/partenaires/7.jpg" width="50px" alt="">
+                                    <img src="/partenaires/9.jpg" width="50px" alt="">
+                                    DSI Awards 2022</p>
                                 <p class="item">
-                                    <select name="categorie" id="" v-model="selectedCategorie"
+                                    <select name="categorie" class="form-control" id="" v-model="selectedCategorie"
                                         @change="onCategorieChange">
-                                        <option value="">Selectionner la catégorie</option>
-                                        <option value="1">DSI INNOVANT(E)</option>
-                                        <option value="2">DSI RESILIENT</option>
-                                        <option value="3">LEADERSHIP FEMININ </option>
-                                        <option value="4">ADMINISTRATION INTELLIGENTE</option>
-                                        <option value="5">COUP DE CŒUR</option>
-                                        <option value="6">ENTREPRISE DIGITALE</option>
-                                        <option value="7">INDUSTRIE 4.0</option>
-                                        <option value="8">LEADER DU SERVICE IT</option>
-                                        <option value="9">CHAMPION DE L’EDUCATION</option>
-                                        <option value="10">DEFENSEURS</option>
+                                        <option value="" selected>Selectionner la catégorie</option>
+                                        @foreach(App\Models\Candidat::CATEGORIE_RADIO as $key => $label)
+                                            <option value="{{ $key }}">{{ $label }}</option>
+                                        @endforeach
                                     </select>
                                 </p>
-                            </h1>
+                            </h3>
                             <!-- ((realtime_data)) -->
 
                             <div id="chart-card" class="card">
                                 <div class="card-body position-relative">
-                                    <h5 class="card-title" id="graph-title">((title))</h5>
-                                    <div id="totalChart" style="width:100%; height: 650px"></div>
-                                    <!-- <p style="position:absolute;top:50%;left:50%;font-size:1.125rem;transform: translate(-50%,-50%)"
-                                        v-if="interval == null">Please upload data first</p> -->
+                                    <h6 class="card-title" id="graph-title">((title))</h6>
+                                    <div id="totalChart" style="width:100%; height: 600px"></div>
                                     <p style="position:absolute;top:50%;left:50%;font-size:1.125rem;transform: translate(-50%,-50%)"
                                         v-if="isLoadingDataSets && !realtime_data">Chargement en cours ...</p>
                                 </div>
+                            </div>
+                            <div class="text-center py-3">
+                                 <a @click="loadWinnerPage" class="text-white btn btn-success btn-large my5 mx-auto text-center">THE WINNER</a>
                             </div>
                         </div>
                     </section>
@@ -71,26 +69,21 @@
                             v-if="isLoadingDataSets">Chargement en cours ...</p>
                     </div>
                 </div>
-                <!-- <div id="chart-card" class="card">
-                    <div class="card-body position-relative">
-                        <h5 class="card-title" id="graph-title">((title))</h5>
-                        <div id="vjuryChart" style="width:100%; height: 650px"></div>
-                        <p style="position:absolute;top:50%;left:50%;font-size:1.125rem;transform: translate(-50%,-50%)"
-                            v-if="isLoadingDataSets && !realtime_data">Chargement en cours ...</p>
-                    </div>
-                </div>
-                <div id="chart-card" class="card">
-                    <div class="card-body position-relative">
-                        <h5 class="card-title" id="graph-title">((title))</h5>
-                        <div id="vpublicChart" style="width:100%; height: 650px"></div>
-                        <p style="position:absolute;top:50%;left:50%;font-size:1.125rem;transform: translate(-50%,-50%)"
-                            v-if="isLoadingDataSets && !realtime_data">Chargement en cours ...</p>
-                    </div>
-                </div> -->
-
-
             </div>
         </div>
+    </div>
+
+    <hr>
+    <div class="mt-5 partenaires center text-center flex">
+        <h1>Merci à tous nos partenaires</h1>
+        <img src="/partenaires/1.jpg" width="150px" alt="">
+        <img src="/partenaires/3.jpg" width="150px" alt="">
+        <img src="/partenaires/4.jpg" width="150px" alt="">
+        <img src="/partenaires/5.jpg" width="150px" alt="">
+        <img src="/partenaires/6.jpg" width="150px" alt="">
+        <img src="/partenaires/7.jpg" width="150px" alt="">
+        <img src="/partenaires/8.jpg" width="150px" alt="">
+        <img src="/partenaires/9.jpg" width="150px" alt="">
     </div>
 
 
@@ -130,7 +123,7 @@
                 tickDuration: 1000,
                 fetchdaemon_interval: 3000,
                 top_n: 10,
-                title: "Candidats",
+                title: "Classement",
                 fileplaceholder: "Choose file",
                 realtime_data: null,
                 datasets: {
@@ -147,15 +140,15 @@
                 secondaryCharts: [
                     {
                         id: "vpro",
-                        title: "vpro"
+                        title: "Professionnel"
                     },
                     {
                         id: "vjury",
-                        title: "vjuryChart"
+                        title: "Jury"
                     },
                     {
                         id: "vpublic",
-                        title: "vpublicChart"
+                        title: "Public"
                     },
                 ]
 
@@ -196,7 +189,7 @@
                             .then((response) => response.json())
                             .then((jsonResponse) => {
                                 const { total, vpro, vjury } = jsonResponse
-                            
+
 
                                 Object.keys(jsonResponse).forEach(key => {
 
@@ -312,6 +305,9 @@
                 },
                 onCategorieChange: function () {
                     window.location.href = window.location.origin + window.location.pathname + '?categorie=' + this.selectedCategorie
+                },
+                loadWinnerPage: function () {
+                    window.location.href = window.location.origin + '/classement/' + this.selectedCategorie
                 },
             },
             delimiters: ["((", "))"]
