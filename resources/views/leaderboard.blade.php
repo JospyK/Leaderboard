@@ -15,7 +15,7 @@
 </head>
 <style>
     .chart-card .chart{
-        height: 40vh;
+        height: 30vh;
     }
 </style>
 <body>
@@ -59,7 +59,7 @@
                                         v-if="isLoadingDataSets && !realtime_data">Chargement en cours ...</p>
                                 </div>
                             </div>
-                            <div class="text-center py-3">
+                            <div class="text-center py-3" v-if="selectedCategorie">
                                  <a @click="loadWinnerPage" class="text-white btn btn-success btn-large my5 mx-auto text-center">THE WINNER</a>
                             </div>
                         </div>
