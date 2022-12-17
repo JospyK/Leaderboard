@@ -1,6 +1,5 @@
 <?php
 
-Route::redirect('/', '/leaderboard');
 Route::get('/classement/{categorie}', 'PageController@classement')->name('candidats.classement');
 
 Route::get('/home', function () {
@@ -44,5 +43,5 @@ Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 
     }
 });
 
-Route::view('/leaderboard', 'leaderboard');
+Route::view('/', 'leaderboard');
 
