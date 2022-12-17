@@ -17,9 +17,21 @@ body {
 }
 
 #main-title {
-    font-size: 2rem;
+    font-size: 1.5rem;
     font-weight: 900;
     line-height: 1.5;
+
+    display: -webkit-flex;
+    display:    -moz-flex;
+    display:     -ms-flex;
+    display:      -o-flex;
+    display:         flex;
+
+    -webkit-justify-content: space-between;
+       -moz-justify-content: space-between;
+        -ms-justify-content: space-between;
+         -o-justify-content: space-between;
+            justify-content: space-between;
 }
 
 label {
@@ -103,7 +115,7 @@ text.label {
 }
 
 .section {
-    background: #fafafa;
+    /* background: #fafafa; */
     position: relative;
     border-bottom: none;
     background-position: center center;
