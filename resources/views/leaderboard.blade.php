@@ -15,30 +15,39 @@
 </head>
 <style>
     .chart-card .chart{
-        height: 30vh;
+        height: 40vh;
     }
 </style>
 <body>
     <div class="container-fluid">
         <div class="row" id="app">
-            <div class="col-md-9">
+            <div class="col-md-7">
                 <main class="main-content">
                     <section class="section">
                         <div class="container">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h3 id="main-title" class="">
+                                        <p class="text-primary">
+                                            <img src="/partenaires/7.jpg" width="50px" alt="">
+                                            <img src="/partenaires/9.jpg" width="50px" alt="">
+                                            DSI Awards 2022</p></h3>
+                                </div>
+                                <div class="col-md-6">
+                                    <p class="item">
+                                        <select name="categorie" class="form-control" id="" v-model="selectedCategorie"
+                                            @change="onCategorieChange">
+                                            <option value="" selected>Selectionner la catégorie</option>
+                                            @foreach(App\Models\Candidat::CATEGORIE_RADIO as $key => $label)
+                                                <option value="{{ $key }}">{{ $label }}</option>
+                                            @endforeach
+                                        </select>
+                                    </p>
+                                </div>
+                            </div>
                             <h3 id="main-title" class="">
-                                <p class="text-primary">
-                                    <img src="/partenaires/7.jpg" width="50px" alt="">
-                                    <img src="/partenaires/9.jpg" width="50px" alt="">
-                                    DSI Awards 2022</p>
-                                <p class="item">
-                                    <select name="categorie" class="form-control" id="" v-model="selectedCategorie"
-                                        @change="onCategorieChange">
-                                        <option value="" selected>Selectionner la catégorie</option>
-                                        @foreach(App\Models\Candidat::CATEGORIE_RADIO as $key => $label)
-                                            <option value="{{ $key }}">{{ $label }}</option>
-                                        @endforeach
-                                    </select>
-                                </p>
+                               
+                             
                             </h3>
                             <!-- ((realtime_data)) -->
 
@@ -58,7 +67,7 @@
 
                 </main>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-5">
 
 
                 <div class="card chart-card mini" v-for="(chart, index) in secondaryCharts" :key="index">
@@ -183,7 +192,7 @@
 
                         }
 
-                        const raceEndpoint = '/api/race?categorie=' + this.selectedCategorie
+                        const raceEndpoint = '/api/race?categorie=' + (this.selectedCategorie || '')
 
                         fetch(raceEndpoint, options)
                             .then((response) => response.json())

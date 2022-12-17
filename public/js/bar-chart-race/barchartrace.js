@@ -87,7 +87,7 @@ function createBarChartRace(data, top_n, tickDuration, options) {
         .range([margin.left + marginTimeAxis, width - margin.right]);
 
     let timeAxis = d3.axisBottom()
-        .ticks(5)
+        .ticks(1)
         .scale(t);
 
     let x = d3.scaleLinear()
@@ -144,31 +144,38 @@ function createBarChartRace(data, top_n, tickDuration, options) {
         .attr('y', d => y(d.rank) + ((y(1) - y(0)) / 2) + 1)
         .text(d => d3.format(',.0f')(d.lastValue));
 
-    // svg.append('rect')
-    //     .attr('y', height - margin.bottom)
-    //     .attr('width', width)
-    //     .attr('height', margin.bottom)
-    //     .style('fill', '#ffffff')
+    svg.append('rect')
+        .attr('y', height - margin.bottom)
+        .attr('width', width)
+        .attr('height', margin.bottom)
+        .style('fill', '#ffffff')
 
 
-    timeline_svg.append('g')
-        .attr('class', 'axis tAxis')
-        .attr('transform', `translate(0, 20)`)
-        .call(timeAxis);
+    // timeline_svg.append('g')
+    //     .attr('class', 'axis tAxis')
+    //     .attr('transform', `translate(0, 20)`)
+    //     .call(timeAxis);
 
-    timeline_svg.append('rect')
-        .attr('class', 'progressBar')
-        .attr('transform', `translate(${marginTimeAxis}, 20)`)
-        .attr('height', 2)
-        .attr('width', 0);
-        
-
-    // let timeText = svg.append('text')
-    //     .attr('class', 'timeText')
+    // timeline_svg.append("text")
+    // .attr('class', 'timeText')
     //     .attr('x', width - margin.right)
     //     .attr('y', height - margin.bottom - 5)
     //     .style('text-anchor', 'end')
-    //     .html(d3.timeFormat("%B %d, %Y")(time));
+    // .text("income per capita, inflation-adjusted (dollars)");
+
+    // timeline_svg.append('rect')
+    //     .attr('class', 'progressBar')
+    //     .attr('transform', `translate(${marginTimeAxis}, 20)`)
+    //     .attr('height', 2)
+    //     .attr('width', 0);
+        
+
+    let timeText = svg.append('text')
+        .attr('class', 'timeText')
+        .attr('x', width - margin.right)
+        .attr('y', height - margin.bottom - 5)
+        .style('text-anchor', 'end')
+        .html(d3.timeFormat("%d %b, %Y")(new Date("2022-12-17")));
 
     // draw the updated graph with transitions
     function drawGraph(row_data) {
