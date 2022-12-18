@@ -23,6 +23,9 @@
     .chart-card .chart{
         height: 30vh;
     }
+    .chart-card .card-body{
+        /* margin-right: 100px; */
+    }
 </style>
 <body>
     <div class="container-fluid">
@@ -57,10 +60,10 @@
                             </h3>
                             <!-- ((realtime_data)) -->
 
-                            <div id="chart-card" class="card">
-                                <div class="card-body position-relative">
+                            <div id="chart-card" class="card chart-card">
+                                <div class="card-body position-relative ctn">
                                     <h6 class="card-title" id="graph-title">((title))</h6>
-                                    <div id="totalChart" style="width:100%; height: 600px"></div>
+                                    <div id="totalChart" style="width:100%; height: 600px" class="chart main"></div>
                                     <p style="position:absolute;top:50%;left:50%;font-size:1.125rem;transform: translate(-50%,-50%)"
                                         v-if="isLoadingDataSets && !realtime_data">Chargement en cours ...</p>
                                 </div>
@@ -125,7 +128,7 @@
             data: {
                 errors: [],
                 file: null,
-                isLoadingDataSets: true,
+                isLoadingDataSets: false,
                 csv_data: null,
                 interval: null,
                 intervalList: {
@@ -135,7 +138,7 @@
                     vpublic: null,
                 },
                 duration: 1,
-                tickDuration: 1000,
+                tickDuration:1000,
                 fetchdaemon_interval: 3000,
                 top_n: 10,
                 title: "Classement",
@@ -180,6 +183,9 @@
             },
             methods: {
                 fetchDataSet: function () {
+                    if (this.isLoadingDataSets) {
+                        return
+                    }
                     this.isLoadingDataSets = true;
                     clearTimeout(this.daemonTimer)
                     const getRandomInt = (min, max) => {
@@ -297,6 +303,9 @@
                             const opts = {
                                 htmlEl: item + 'Chart',
                                 datasetKey: item,
+                                margin: {
+                                    right: item ==='total' ? 100 : 80
+                                }
                             }
                             self.intervalList[item] = createBarChartRace(this.datasets[item], self.top_n, self.tickDuration, opts);
                         });
