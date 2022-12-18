@@ -28,6 +28,22 @@ class CandidatApiController extends Controller
             'total' => $candidats->pluck('total', 'nom'),
         ];
 
+        $conversion = [
+            0 => 0,
+            1 => 5,
+            2 => 4,
+            3 => 3,
+            4 => 2,
+            5 => 1,
+        ];
+
+        // conversion
+        foreach ($data as $key => $table) {
+            foreach ($table as $position => $element) {
+                $table[$position] = $conversion[$element];
+            }
+        }
+
         return response()->json($data, 200);
     }
 

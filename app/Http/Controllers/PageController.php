@@ -9,7 +9,7 @@ class PageController extends Controller
 {
     public function classement(Request $request)
     {
-        $winner = Candidat::where('categorie', $request->categorie)->orderBy('total', 'DESC')->orderBy('vpro', 'DESC')->orderBy('vpro', 'DESC')->first();
+        $winner = Candidat::where('categorie', $request->categorie)->orderBy('total', 'ASC')->orderBy('vpro', 'ASC')->orderBy('vpro', 'ASC')->first();
 
         //dd($winner);
         return view('admin.candidats.classement', compact('winner'));
